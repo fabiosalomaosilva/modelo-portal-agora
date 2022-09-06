@@ -60,7 +60,7 @@ export default function CadastroPjPasso01() {
       ['0'],
       'Selecione uma opção válida'
     ),
-    cep: Yup.number().required('O campo CEP é obrigatório'),
+    cep: Yup.string().required('O campo CEP é obrigatório'),
     endereco: Yup.string().required('O campo Endenreço é obrigatório'),
     numero: Yup.string().required('O campo Número é obrigatório'),
     bairro: Yup.string().required('O campo Bairro é obrigatório'),
@@ -82,12 +82,22 @@ export default function CadastroPjPasso01() {
   };
 
   const resolveCep = async (e: any) => {
-    const cep = await getCep(e.target.value);
-    formik.values.endereco = cep.endereco;
-    formik.values.bairro = cep.bairro;
-    formik.values.estado = cep.estado;
-    formik.values.cidade = cep.cidade;
-    formik.handleBlur(e);
+    try {
+      const cep = await getCep(
+        e.target.value.toString().replace('.', '').replace('-', '')
+      );
+      formik.values.endereco = cep.endereco;
+      formik.values.bairro = cep.bairro;
+      formik.values.estado = cep.estado;
+      formik.values.cidade = cep.cidade;
+      formik.handleBlur(e);
+    } catch {
+      formik.values.endereco = '';
+      formik.values.bairro = '';
+      formik.values.estado = '';
+      formik.values.cidade = '';
+      formik.handleBlur(e);
+    }
   };
 
   const validarCpf = async (e: any) => {
@@ -128,7 +138,7 @@ export default function CadastroPjPasso01() {
           <TitleSeparator label='Informações Iniciais:' />
           <div className='text-left'>
             <Input
-            type='text'
+              type='text'
               placeholder='Nome de usuário'
               label='Nome de usuário:'
               description='Máximo de 10 caractéres:*'
@@ -371,8 +381,9 @@ export default function CadastroPjPasso01() {
 
             <div className='grid grid-cols-4 gap-4 -mt-6'>
               <div>
-                <Input
+                <MaskInput
                   type='text'
+                  mask='99.999-999'
                   placeholder='CEP'
                   label='CEP'
                   id='cep'
@@ -478,7 +489,9 @@ export default function CadastroPjPasso01() {
             </div>
 
             <div className='flex flex-row justify-between'>
-              <Button type='button' onClick={() => navigate('/')}>VOLTAR</Button>
+              <Button type='button' onClick={() => navigate('/')}>
+                VOLTAR
+              </Button>
               <Button type='submit'>PROSSEGUIR</Button>
             </div>
           </div>

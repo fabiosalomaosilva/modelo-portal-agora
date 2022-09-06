@@ -18,6 +18,7 @@ import {
 import { Cliente } from '../../../models/cliente';
 import MaskInput from '../../../components/forms/Input/inputTextMask';
 import DecimalInput from '../../../components/forms/Input/inputDecimal';
+import swal from 'sweetalert';
 
 type CadastroPjPasso02Errors = {
   aplicacaoFinanceira?: string;
@@ -62,7 +63,7 @@ export default function CadastroPjPasso02() {
   const handleContaBanco = () => {
     const id = cliente.contasBancarias.length + 1;
     if (tipo && agencia && conta && digito && banco) {
-      toast('entrou aqui', { type: 'success' });
+      toast('Conta adicionada', { type: 'success' });
       console.log(conta);
       const contaBancaria: ContaBancaria = {
         id,
@@ -96,7 +97,7 @@ export default function CadastroPjPasso02() {
       onlyNumbers(values.patrimonioLiquido)
     );
     values.faturamento = parseFloat(onlyNumbers(values.faturamento));
-    dispatch(setCliente(values));  
+    dispatch(setCliente(values));
   };
 
   const validate = (values: Cliente) => {
@@ -119,7 +120,10 @@ export default function CadastroPjPasso02() {
         'Campo o Tipo de Endereço de correspondência é obrigatório';
     }
 
-    if (values.tipoEnderecoCorrespondencia !== '0' && values.tipoEnderecoCorrespondencia !== '1') {
+    if (
+      values.tipoEnderecoCorrespondencia !== '0' &&
+      values.tipoEnderecoCorrespondencia !== '1'
+    ) {
       errors.especificacaoEnderecoCorrespondencia =
         'Campo o Especificação de endereço de correspondência é obrigatória';
     }
@@ -142,6 +146,26 @@ export default function CadastroPjPasso02() {
       setShowEspecificacao(true);
     }
   }, [formik.values.tipoEnderecoCorrespondencia]);
+
+  const removeConta = (item: ContaBancaria) => {
+    swal({
+      title: "Deseja excluir?",
+      text: "Deseja excluir a conta bancária?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        dispatch(deleteContaBancaria(item));
+        swal("Pronto! Conta bancária excluída!", {
+          icon: "success",
+        });
+      } else {
+        swal("Dados não excluídos!");
+      }
+    });
+  };
 
   return (
     <>
@@ -218,7 +242,7 @@ export default function CadastroPjPasso02() {
             </div>
           </div>
         </div>
-        <div className="text-right -mt-8">
+        <div className='text-right -mt-4'>
           <Button type='button' size='sm' onClick={handleContaBanco}>
             Adicionar conta
           </Button>
@@ -245,9 +269,15 @@ export default function CadastroPjPasso02() {
                     key={index}
                     className='border-b border-gray-200 hover:bg-gray-100'
                   >
-                    <td className='py-4 px-6 text-left font-normal'>{item.tipo}</td>
-                    <td className='py-4 px-6 text-left font-normal'>{item.banco}</td>
-                    <td className='py-4 px-6 text-left font-normal'>{item.agencia}</td>
+                    <td className='py-4 px-6 text-left font-normal'>
+                      {item.tipo}
+                    </td>
+                    <td className='py-4 px-6 text-left font-normal'>
+                      {item.banco}
+                    </td>
+                    <td className='py-4 px-6 text-left font-normal'>
+                      {item.agencia}
+                    </td>
                     <td className='py-4 px-6 text-left font-normal'>
                       {item.conta + '-' + item.digito}
                     </td>
@@ -255,7 +285,7 @@ export default function CadastroPjPasso02() {
                       <button
                         type='button'
                         className='p-1 rounded-full w-7 h-7 font-bold text-gray-600 bg-gray-200 hover:bg-gray-300 -pl-[3px] solid'
-                        onClick={() => dispatch(deleteContaBancaria(item))}
+                        onClick={() => removeConta(item)}
                       >
                         <svg
                           xmlns='http://www.w3.org/2000/svg'
