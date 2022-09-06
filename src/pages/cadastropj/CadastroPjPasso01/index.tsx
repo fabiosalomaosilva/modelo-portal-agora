@@ -69,7 +69,7 @@ export default function CadastroPjPasso01() {
   });
 
   const onSubmit = (values: Cliente) => {
-    if (typeof Date.parse(values.dataConstituicao)) {
+    if (typeof Date.parse(values.dataConstituicao as string)) {
       formik.values.cnpj = formik.values.cnpj
         .toString()
         .replace('.', '')

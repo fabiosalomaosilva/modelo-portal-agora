@@ -26,7 +26,7 @@ export function cnpjValidation(value: string) {
   const items = [...new Set(numbers)];  
   if (items.length === 1) return false;
 
-  const calc = (x) => {
+  const calc = (x: any) => {
     const slice = numbers.slice(0, x);
     let factor = x - 7;
     let sum = 0;
