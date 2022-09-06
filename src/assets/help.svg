@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>help-2</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="help-2">
+            <g id="help-2-a-link" fill="#FFCDA9" fill-rule="nonzero">
+                <path d="M8,0 C12.4176,0 16,3.5824 16,8 C16,12.4176 12.4176,16 8,16 C3.5824,16 0,12.4176 0,8 C0,3.5824 3.5824,0 8,0" id="help-2-a"></path>
+            </g>
+            <path d="M6.64000244,4.8 L8.11956665,4.8 C9.11391984,4.8 9.92000237,5.60608253 9.92000237,6.60043572 C9.92000237,7.59478891 9.11391984,8.40087144 8.11956665,8.40087144 L7.44000244,8.40087144" id="Shape" stroke="#121428" stroke-width="2" stroke-linecap="round"></path>
+            <circle id="Oval" fill="#121428" fill-rule="nonzero" cx="7.6" cy="11.36" r="1"></circle>
+        </g>
+    </g>
+</svg>

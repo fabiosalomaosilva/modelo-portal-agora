@@ -1,0 +1,206 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  @apply w-full;
+}
+
+h1 {
+  @apply text-4xl;
+  @apply text-gray-900 font-semibold;
+}
+
+h2 {
+  @apply text-3xl;
+  @apply text-gray-900 font-semibold;
+}
+
+h3 {
+  @apply text-2xl;
+  @apply text-gray-900 font-semibold;
+}
+
+select {
+  @apply w-full border-[1px] border-gray-300 px-3 py-3 outline-none active:outline-none focus:border-gray-400;
+}
+
+option {
+  @apply rounded-none p-2 h-2;
+}
+
+i.tooltip {
+  margin-left: 5px;
+  text-decoration: none;
+}
+
+i.tooltip:hover {
+  cursor: alias pointer;
+  position: relative;
+  font-style: normal;
+}
+i.tooltip span {
+  display: none;
+}
+
+i.tooltip:hover span {
+  border: #dfdfdf 1px solid;
+  border-radius: 5px;
+  padding: 5px 20px 5px 5px;
+  display: block;
+  z-index: 100;
+  background: #fff no-repeat 100% 5%;
+  left: 0px;
+  margin: 10px;
+  width: 350px;
+  position: absolute;
+  top: 10px;
+  text-decoration: none;
+  font-size: small;
+  padding: 15px;
+  box-shadow: 2px 2px 10px 2px #c7c7c7;
+}
+
+i.tooltip:before {
+  content: url('../src/assets/help.svg');
+}
+
+input:disabled,
+select:disabled {
+  background-color: #f7f5f7;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+
+
+.card-parent {
+  background-color: #f9f9f9;
+  padding-top: 9px;
+  padding-inline: 20px;
+  border: solid 1px #ccc;
+  border-left: solid 5px #01464d;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.card-child-01 {
+  background-color: #f8f8f8;
+  padding-top: 9px;
+  padding-inline: 20px;
+  border: solid 1px #ccc;
+  border-left: solid 5px rgba(1, 70, 77, 0.8);
+  margin-left: 20px;
+}
+
+.card-child-02 {
+  background-color: #f8f8f8;
+  padding-top: 9px;
+  padding-inline: 20px;
+  border: solid 1px #ccc;
+  border-left: solid 5px rgba(1, 70, 77, 0.6);
+  margin-left: 40px;
+}
+
+.card-child-03 {
+  background-color: #f8f8f8;
+  padding-top: 9px;
+  padding-inline: 20px;
+  border: solid 1px #ccc;
+  border-left: solid 5px rgba(1, 70, 77, 0.5);
+  margin-left: 60px;
+}
+
+.card-child-04 {
+  background-color: #f8f8f8;
+  padding-top: 9px;
+  padding-inline: 20px;
+  border: solid 1px #ccc;
+  border-left: solid 5px rgba(1, 70, 77, 0.4);
+  margin-left: 80px;
+}
+
+.card-child-05 {
+  background-color: #f8f8f8;
+  padding-top: 9px;
+  padding-inline: 20px;
+  border: solid 1px #ccc;
+  border-left: solid 5px rgba(1, 70, 77, 0.3);
+  margin-left: 100px;
+}
+.card-child-06 {
+  background-color: #f8f8f8;
+  padding-top: 9px;
+  padding-inline: 20px;
+  border: solid 1px #ccc;
+  border-left: solid 5px rgba(1, 70, 77, 0.2);
+  margin-left: 120px;
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 600;
+  text-align: left;
+  margin-top: 0;
+}
+
+.card-title-icons {
+  font-size: 15px;
+  font-weight: 600;
+  text-align: right;
+  margin-top: 0;
+}
+
+.card-title-child {
+  margin-left: 15px;
+}
+
+.card-title-child-icon {
+  margin-left: -45px;
+}
+
+.card-title-parent {
+  margin-right: 45px;
+}
+
+.card-title-sm {
+  font-size: 10px;
+  padding: 0;
+}
+
+.row {
+  padding: 0;
+  margin: 0;
+}
+
+.card-icon {
+  margin-left: 10px;
+  margin-top: 3px;
+  border-radius: 50%;
+  padding: 7px;
+  font-size: 17px;
+  color: #767676;
+}
+
+.card-icon:hover {
+  background-color: #e3e3e3;
+}
+
+.card-btn-action {
+  border: none 0 rgba(255, 255, 255, 0);
+  background-color: rgba(255, 255, 255, 0);
+  min-width: 10px;
+  min-height: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.card-inner {
+  padding: 10px;
+  background-color: #e7e7e7;
+}
