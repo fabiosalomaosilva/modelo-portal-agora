@@ -25,6 +25,7 @@ import MenuAdministradores from './componentes/MenuAdministradores';
 import FormControladora from './componentes/FormControladora';
 
 export default function CadastroPjPasso03() {
+  let navigate = useNavigate();
   const showControladora = useSelector(
     (state: RootState) => state.showPanelControladoras
   );
@@ -69,6 +70,15 @@ export default function CadastroPjPasso03() {
           <MenuAdministradores visible={true} />
         </div>
       </section>
+      <br />
+      <div className='flex flex-row justify-between'>
+          <Button type='button' onClick={() => navigate('/pj/passo02')}>
+            VOLTAR
+          </Button>
+          <Button type='button'>PROSSEGUIR</Button>
+        </div>
+        <br />
+
     </div>
   );
 }

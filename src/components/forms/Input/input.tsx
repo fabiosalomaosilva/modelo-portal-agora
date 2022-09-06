@@ -54,7 +54,7 @@ export default function Input(props: InputProps) {
         maxLength={props.max}
         minLength={props.min}
       />
-      {props.error && props.touched ? (
+      {props.error ? (
         <div className='text-xs ml-2 text-red-400'>{props.error}</div>
       ) : null}
     </div>

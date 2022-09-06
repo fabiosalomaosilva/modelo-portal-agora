@@ -73,7 +73,7 @@ export default function InputDecimal(props: InputDecimalProps) {
         onChange={props.onChange}
         onBlur={props.onBlur}
       />
-      {props.error && props.touched ? (
+      {props.error ? (
         <div className='text-xs ml-2 text-red-400'>{props.error}</div>
       ) : null}
     </div>

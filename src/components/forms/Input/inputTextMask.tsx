@@ -20,6 +20,7 @@ export interface InputProps {
   max?: number;
   min?: number;
   type: 'text' | 'number';
+  ref: React.MutableRefObject<null>;
 }
 
 export default function MaskInput(props: InputProps) {
@@ -43,6 +44,7 @@ export default function MaskInput(props: InputProps) {
         )}
       </div>
       <InputMask
+        ref={props.ref}
         mask={props.mask}
         id={props.id}
         name={props.name}
@@ -55,7 +57,7 @@ export default function MaskInput(props: InputProps) {
         maxLength={props.max}
         minLength={props.min}
       />
-      {props.error && props.touched ? (
+      {props.error ? (
         <div className='text-xs ml-2 text-red-400'>{props.error}</div>
       ) : null}
     </div>
