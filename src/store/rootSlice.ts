@@ -24,39 +24,39 @@ interface ActionUpdateControlador {
 }
 
 const local = JSON.parse(localStorage.getItem('currentClient') as string);
-
+const intialDataCliente: Cliente ={
+  nomeUsuario: '',
+  principalObjetivoComercial: '0',
+  telefone: '',
+  email: '',
+  confirmarEmail: '',
+  cnpj: '',
+  denominacaoComercial: '',
+  formaConstituicao: '',
+  principalObjetoSocial: '0',
+  principalAtividade: '0',
+  possuiVinculocomAgora: '0',
+  endereco: '',
+  numero: '',
+  complemento: '',
+  bairro: '',
+  estado: '',
+  cidade: '',
+  informacoesSocietarias: '',
+  operoCarteira: '',
+  tipoEnderecoCorrespondencia: '0',
+  especificacaoEnderecoCorrespondencia: '',
+  contasBancarias: [],
+  controladores: [],
+  administradores: [],
+  pessoasProprietarias: [],
+  procuradores: [],
+  emissoresOrdem: [],
+}; 
 const initialState: Cliente =
   local !== null && local !== ''
     ? local
-    : {
-        nomeUsuario: '',
-        principalObjetivoComercial: '0',
-        telefone: '',
-        email: '',
-        confirmarEmail: '',
-        cnpj: '',
-        denominacaoComercial: '',
-        formaConstituicao: '',
-        principalObjetoSocial: '0',
-        principalAtividade: '0',
-        possuiVinculocomAgora: '0',
-        endereco: '',
-        numero: '',
-        complemento: '',
-        bairro: '',
-        estado: '',
-        cidade: '',
-        informacoesSocietarias: '',
-        operoCarteira: '',
-        tipoEnderecoCorrespondencia: '0',
-        especificacaoEnderecoCorrespondencia: '',
-        contasBancarias: [],
-        controladores: [],
-        administradores: [],
-        pessoasProprietarias: [],
-        procuradores: [],
-        emissoresOrdem: [],
-      };
+    : intialDataCliente;
 
 const initiSelectedControlador: Controlador = {
   id: '',
@@ -84,6 +84,10 @@ const rootSlice = createSlice({
     setCliente: (state, action: ActionCliente) => {
       state.cliente = action.payload;
       localStorage.setItem('currentClient', JSON.stringify(state.cliente));
+    },
+    cleanCliente: (state) => {
+      state.cliente = intialDataCliente;
+      localStorage.clear();
     },
     addContaBancaria: (state, action: ActionContaBancaria) => {
       state.cliente.contasBancarias.push(action.payload);
@@ -157,5 +161,6 @@ export const {
   deleteControladora,
   setSelectedControlador,
   updateSelectedControlador,
+  cleanCliente
 } = rootSlice.actions;
 export default rootSlice.reducer;

@@ -477,7 +477,7 @@ export default function CadastroPjPasso01() {
             </div>
 
             <div className='flex flex-row justify-between'>
-              <Button type='button'>VOLTAR</Button>
+              <Button type='button' onClick={() => navigate('/')}>VOLTAR</Button>
               <Button type='submit'>PROSSEGUIR</Button>
             </div>
           </div>

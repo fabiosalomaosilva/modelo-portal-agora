@@ -6,6 +6,7 @@ import Header from './components/Header';
 import CadastroPjPasso01 from './pages/cadastropj/CadastroPjPasso01';
 import CadastroPjPasso02 from './pages/cadastropj/CadastroPjPasso02';
 import CadastroPjPasso03 from './pages/cadastropj/CadastroPjPasso03';
+import Dashboard from './pages/Dashboard';
 
 const AppRoutes = () => {
   return (
@@ -15,7 +16,7 @@ const AppRoutes = () => {
       <div className='flex justify-center'>
         <div className='w-[1280px] mx-14'>
           <Routes>
-            <Route path='/' element={<App />} />
+            <Route path='/' element={<Dashboard />} />
             <Route path='/pj/passo01' element={<CadastroPjPasso01 />} />
             <Route path='/pj/passo02' element={<CadastroPjPasso02 />} />
             <Route path='/pj/passo03' element={<CadastroPjPasso03 />} />

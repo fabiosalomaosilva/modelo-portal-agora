@@ -20,7 +20,7 @@ export interface InputProps {
   max?: number;
   min?: number;
   type: 'text' | 'number';
-  ref: React.MutableRefObject<null>;
+  ref?: React.MutableRefObject<null>;
 }
 
 export default function MaskInput(props: InputProps) {
