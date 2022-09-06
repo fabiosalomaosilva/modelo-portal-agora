@@ -28,7 +28,7 @@ export default function CadastroPjPasso01() {
       ['0'],
       'Selecione uma opção válida'
     ),
-    telefone: Yup.number().required('O campo Telefone é obrigatório'),
+    telefone: Yup.string().required('O campo Telefone é obrigatório'),
     ramal: Yup.number().typeError('O campo ramal deve conter apenas números'),
     email: Yup.string()
       .email('E-mail inválido')
@@ -173,8 +173,9 @@ export default function CadastroPjPasso01() {
 
             <div className='grid grid-cols-4 gap-4'>
               <div className='col'>
-                <Input
+                <MaskInput
                   type='text'
+                  mask='(99) 99999-9999'
                   placeholder='Telefone'
                   description='Comercial*'
                   label='Telefone'
@@ -239,7 +240,7 @@ export default function CadastroPjPasso01() {
             <div className='grid grid-cols-4 gap-4'>
               <div>
                 <MaskInput
-                  type='number'
+                  type='text'
                   mask='99.999.999/9999-99'
                   placeholder='CNPJ'
                   label='CNPJ'
