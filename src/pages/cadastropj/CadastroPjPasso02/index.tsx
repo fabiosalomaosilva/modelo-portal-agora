@@ -151,8 +151,8 @@ export default function CadastroPjPasso02() {
     swal({
       title: "Deseja excluir?",
       text: "Deseja excluir a conta bancária?",
-      icon: "warning",
-      buttons: true,
+      icon: "warning",      
+      buttons: ["Cancelar", "Excluir"],
       dangerMode: true,
     })
     .then((willDelete) => {
