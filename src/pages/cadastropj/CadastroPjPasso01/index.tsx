@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import NumberFormat from 'react-number-format';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
@@ -19,6 +19,10 @@ import { cnpjValidation } from '../../../utils/validations/validationCnpj';
 
 export default function CadastroPjPasso01() {
   let cliente = useSelector((state: RootState) => state.cliente);
+  let showPanel = useSelector(
+    (state: RootState) => state.showPanelControladoras
+  );
+
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
@@ -69,13 +73,17 @@ export default function CadastroPjPasso01() {
   });
 
   const onSubmit = (values: Cliente) => {
+    const cnpj = formik.values.cnpj
+      .toString()
+      .replace('.', '')
+      .replace('/', '')
+      .replace('-', '')
+      .replace('.', '');
+
     if (typeof Date.parse(values.dataConstituicao as string)) {
-      formik.values.cnpj = formik.values.cnpj
-        .toString()
-        .replace('.', '')
-        .replace('/', '')
-        .replace('-', '')
-        .replace('.', '');
+      if (formik.values.cnpj !== cnpj) {
+        formik.values.cnpj = cnpj;
+      }
       dispatch(setCliente(values));
       navigate('/pj/passo02');
     }
@@ -114,6 +122,13 @@ export default function CadastroPjPasso01() {
     validationSchema,
     onSubmit,
   });
+
+  useEffect(() => {
+    if (cliente.cnpj !== '') {
+      formik.resetForm();
+      formik.values = cliente;
+    }
+  }, [showPanel]);
 
   return (
     <div>

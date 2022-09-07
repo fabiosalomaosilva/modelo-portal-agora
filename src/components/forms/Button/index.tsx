@@ -37,7 +37,7 @@ export default function Button(props: ButtonProps) {
   return (
     <button
       type={props.type}
-      className={`${textClass} rounded-full transition-all ease-in-out ${props.className}`}
+      className={`${textClass} outline-none rounded-full transition-all ease-in-out ${props.className}`}
       onClick={props.onClick}
       title={props.tooltip}
     >

@@ -45,7 +45,7 @@ export default function Select(props: SelectProps) {
         onChange={props.onChange}
         onBlur={props.onBlur}
       >
-        <option value='0' disabled>
+        <option value='0'>
           Selecione uma opção
         </option>
         {props.children}

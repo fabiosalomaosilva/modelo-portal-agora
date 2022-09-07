@@ -16,6 +16,7 @@ export interface Controlador {
 }
 
 export interface Nif {
+    id: string;
     referencia: string;
     pais: string;
     numero: number;
@@ -23,6 +24,7 @@ export interface Nif {
 }
 
 export interface PessoaProprietaria {
+    id: string;
     nome: string;
     cpf: string;
     rg: number;    

@@ -17,19 +17,13 @@ export interface InputDecimalProps {
   disabled?: boolean;
   id?: string;
   name?: string;
+  maxLenght?: number;
 }
 
 const onlyNumbers = (value: any) => {
   if (value === undefined || value === null) return;
   return value
-    .toString()
-    .replace('.', '')
-    .replace('.', '')
-    .replace('.', '')
-    .replace('.', '')
-    .replace('.', '')
-    .replace('.', '')
-    .replace('.', '')
+    .toString().replace(/\./g,' ')
     .replace('-', '')
     .replace(',', '.')
     .replace('/', '')
@@ -63,6 +57,7 @@ export default function InputDecimal(props: InputDecimalProps) {
         id={props.id}
         disabled={props.disabled}
         name={props.name}
+        maxLength={props.maxLenght}
         decimalSeparator={','}
         thousandSeparator={'.'}
         decimalScale={2}

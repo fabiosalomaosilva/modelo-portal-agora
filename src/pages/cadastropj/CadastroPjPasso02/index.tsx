@@ -86,18 +86,20 @@ export default function CadastroPjPasso02() {
     if (cliente.contasBancarias.length === 0) {
       toast('Nenhuma conta bancária foi cadastrada', { type: 'error' });
     }
-    values.contasBancarias = cliente.contasBancarias;
-    values.aplicacaoFinanceira = parseFloat(
+    const aplicacaoFinanceira = parseFloat(
       onlyNumbers(values.aplicacaoFinanceira)
     );
-    values.emprestimosFinanciamentos = parseFloat(
+    const emprestimosFinanciamentos = parseFloat(
       onlyNumbers(values.emprestimosFinanciamentos)
     );
-    values.patrimonioLiquido = parseFloat(
-      onlyNumbers(values.patrimonioLiquido)
-    );
-    values.faturamento = parseFloat(onlyNumbers(values.faturamento));
+    const patrimonioLiquido = parseFloat(onlyNumbers(values.patrimonioLiquido));
+    const faturamento = parseFloat(onlyNumbers(values.faturamento));
+    formik.setFieldValue('contasBancarias', cliente.contasBancarias);
+    formik.setFieldValue('emprestimosFinanciamentos', emprestimosFinanciamentos);
+    formik.setFieldValue('patrimonioLiquido', patrimonioLiquido);
+    formik.setFieldValue('faturamento', faturamento);
     dispatch(setCliente(values));
+    navigate('/pj/passo03');
   };
 
   const validate = (values: Cliente) => {
@@ -149,20 +151,19 @@ export default function CadastroPjPasso02() {
 
   const removeConta = (item: ContaBancaria) => {
     swal({
-      title: "Deseja excluir?",
-      text: "Deseja excluir a conta bancária?",
-      icon: "warning",      
-      buttons: ["Cancelar", "Excluir"],
+      title: 'Deseja excluir?',
+      text: 'Deseja excluir a conta bancária?',
+      icon: 'warning',
+      buttons: ['Cancelar', 'Excluir'],
       dangerMode: true,
-    })
-    .then((willDelete) => {
+    }).then((willDelete) => {
       if (willDelete) {
         dispatch(deleteContaBancaria(item));
-        swal("Pronto! Conta bancária excluída!", {
-          icon: "success",
+        swal('Pronto! Conta bancária excluída!', {
+          icon: 'success',
         });
       } else {
-        swal("Dados não excluídos!");
+        swal('Dados não excluídos!');
       }
     });
   };

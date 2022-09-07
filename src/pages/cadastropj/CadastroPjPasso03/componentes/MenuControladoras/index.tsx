@@ -31,7 +31,7 @@ export default function MenuControladoras(props: MenuControladorasProps) {
   } else {
     textClass = 'hidden';
   }
-  
+
   return (
     <>
       <div className={`flex flex-col ${textClass}`}>
@@ -53,9 +53,9 @@ export default function MenuControladoras(props: MenuControladorasProps) {
         </div>
 
         <ul id='card-list'>
-          {cliente.controladores.map(item => {
-            if(item.controladorPai === '0'){
-              return (<Row item={item} />)
+          {cliente.controladores.map((item) => {
+            if (item.controladorPai === '0') {
+              return <Row key={item.id} item={item} />;
             }
           })}
         </ul>
