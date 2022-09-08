@@ -5,6 +5,7 @@ import { RootState } from '../../../../../store';
 import {
   deleteControladora,
   setShowPanelControladoras,
+  setShowPanelPessoaProprietaria,
 } from '../../../../../store/rootSlice';
 import Row from './Row';
 
@@ -46,7 +47,7 @@ export default function MenuControladoras(props: MenuControladorasProps) {
           <Button
             type='button'
             color='secondary'
-            onClick={() => dispatch(setShowPanelControladoras())}
+            onClick={() => dispatch(setShowPanelPessoaProprietaria())}
           >
             Adicionar Pessoa Proprietária
           </Button>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Tooltip from '../Tooltip';
 
 export interface SelectProps {
@@ -14,17 +14,42 @@ export interface SelectProps {
   name?: string;
   error?: string | undefined;
   touched?: boolean | undefined;
+  visible?: boolean | string;
 }
 
 export default function Select(props: SelectProps) {
   let border = 'border-gray-300';
+  let visibility = '';
 
   if (props.error != undefined) {
     border = 'border-red-300 text-red-400 bg-red-50';
   }
 
+  const setVisibility = () => {
+    switch (props.visible) {
+      case false:
+        visibility = 'hidden';
+        break;
+      case true:
+        visibility = '';
+        break;
+        case 'false':
+          visibility = 'hidden';
+          break;
+        case 'true':
+          visibility = '';
+          break;
+      default:
+        visibility = '';
+    }
+  };
+  setVisibility();
+  useEffect(() => {
+    setVisibility();
+  }, [props.visible]);
+
   return (
-    <div className='my-2 md:my-8'>
+    <div className={`my-2 md:my-8 ${visibility}`}>
       <div className='h-7'>
         <label
           htmlFor='txtNomeUsuario'
@@ -45,9 +70,7 @@ export default function Select(props: SelectProps) {
         onChange={props.onChange}
         onBlur={props.onBlur}
       >
-        <option value='0'>
-          Selecione uma opção
-        </option>
+        <option value='0'>Selecione uma opção</option>
         {props.children}
       </select>
       {props.error && props.touched ? (

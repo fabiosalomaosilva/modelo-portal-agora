@@ -23,13 +23,19 @@ import DecimalInput from '../../../components/forms/Input/inputDecimal';
 import MenuControladoras from './componentes/MenuControladoras';
 import MenuAdministradores from './componentes/MenuAdministradores';
 import FormControladora from './componentes/FormControladora';
+import FormPessoaProprietaria from './componentes/FormPessoaProprietaria';
 
 export default function CadastroPjPasso03() {
   let navigate = useNavigate();
   const showControladora = useSelector(
     (state: RootState) => state.showPanelControladoras
   );
-
+  const showPessoaProprietaria = useSelector(
+    (state: RootState) => state.showPanelPessoaProprietaria
+  );
+  const showMenuControladora = useSelector(
+    (state: RootState) => state.showMenuControladora
+  );
   function dispatch(arg0: {
     payload: import('../../../models/conta').Controlador;
     type: string;
@@ -58,8 +64,9 @@ export default function CadastroPjPasso03() {
       <section id='info-banco-passo02' className='my-6'>
         <TitleSeparator label='Controladora ou pessoa proprietária:' />
         <div className='text-left'>
-          <MenuControladoras visible={!showControladora} />
+          <MenuControladoras visible={showMenuControladora} />
           <FormControladora visible={showControladora} />
+          <FormPessoaProprietaria visible={showPessoaProprietaria} />
         </div>
 
       </section>

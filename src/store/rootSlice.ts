@@ -48,20 +48,29 @@ const rootSlice = createSlice({
     selectedPessoaProprietaria: initialSelectedPessoaProprietaria,
     showPanelControladoras: false,
     showPanelPessoaProprietaria: false,
+    showMenuControladora: true,
   },
   reducers: {
     setShowPanelControladoras: (state) => {
       state.showPanelControladoras = true;
+      state.showPanelPessoaProprietaria = false;
+      state.showMenuControladora = false;
     },
     setHidePanelControladoras: (state) => {
       state.showPanelControladoras = false;
+      state.showPanelPessoaProprietaria = false;
+      state.showMenuControladora = true;
       state.selectedControladora = initialSelectedControlador;
     },
     setShowPanelPessoaProprietaria: (state) => {
+      state.showPanelControladoras = false;
       state.showPanelPessoaProprietaria = true;
+      state.showMenuControladora = false;
     },
     setHidePanelPessoaProprietaria: (state) => {
+      state.showPanelControladoras = false;
       state.showPanelPessoaProprietaria = false;
+      state.showMenuControladora = true;
       state.selectedPessoaProprietaria = initialSelectedPessoaProprietaria;
     },
     setCliente: (state, action: ActionCliente) => {

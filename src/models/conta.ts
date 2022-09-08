@@ -30,8 +30,8 @@ export interface PessoaProprietaria {
     rg: number;    
     orgaoEmissor: string;
     participacao: number;
-    vinculoComAgora: boolean;
     tipoVinculo: string;
+    vinculoComAgora: boolean;
     pessoaExpostaPoliticamente: boolean;
     possuiOutraNacionalidade: boolean;
     temResidenciafiscalOutroPais: boolean;
