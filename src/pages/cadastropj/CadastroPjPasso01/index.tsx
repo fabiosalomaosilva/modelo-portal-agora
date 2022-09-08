@@ -196,7 +196,7 @@ export default function CadastroPjPasso01() {
 
             <Separator />
 
-            <div className='grid grid-cols-4 gap-4'>
+            <div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
               <div className='col'>
                 <MaskInput
                   type='text'
@@ -262,7 +262,7 @@ export default function CadastroPjPasso01() {
         <section id='info-societaria-passo01' className='my-6'>
           <TitleSeparator label='Informações empresariais:' />
           <div className='text-left'>
-            <div className='grid grid-cols-4 gap-4'>
+            <div className='grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-4 m-0 md:-mt-6'>
               <div>
                 <MaskInput
                   type='text'
@@ -294,7 +294,7 @@ export default function CadastroPjPasso01() {
               </div>
             </div>
 
-            <div className='grid grid-cols-4 gap-4 -mt-6'>
+            <div className='grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-4 m-0 md:-mt-6'>
               <div>
                 <MaskInput
                   type='text'
@@ -326,7 +326,7 @@ export default function CadastroPjPasso01() {
               </div>
             </div>
 
-            <div className='grid grid-cols-4 gap-4 -mt-6'>
+            <div className='grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-4 m-0 md:-mt-6'>
               <div>
                 <Input
                   type='text'
@@ -394,7 +394,7 @@ export default function CadastroPjPasso01() {
               </div>
             </div>
 
-            <div className='grid grid-cols-4 gap-4 -mt-6'>
+            <div className='grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-4 m-0 md:-mt-6'>
               <div>
                 <MaskInput
                   type='text'
@@ -441,7 +441,7 @@ export default function CadastroPjPasso01() {
               </div>
             </div>
 
-            <div className='grid grid-cols-4 gap-4 -mt-6'>
+            <div className='grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-4 m-0 md:-mt-6'>
               <div>
                 <Input
                   type='text'

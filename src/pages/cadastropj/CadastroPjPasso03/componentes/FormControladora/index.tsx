@@ -66,10 +66,11 @@ export default function FormControladora(props: FormControladoraProps) {
       .test('cnpj', 'CNPJ inválido', (val) => {
         return cnpjValidation(val as string);
       })
-      .test('participacao', 'CNPJ já foi cadastrado', (val) => {
+      .test('cnpj1', 'CNPJ já foi cadastrado', (val) => {
         if (val != undefined && val.length === 18) {
-          const res = cliente.controladores.find((i) => i.cnpj == cleanCnpjCpf(val));
-          console.log(res)
+          const res = cliente.controladores.find(
+            (i) => i.cnpj == cleanCnpjCpf(val)
+          );
           if (res) {
             return false;
           }
@@ -83,6 +84,27 @@ export default function FormControladora(props: FormControladoraProps) {
         if (val != undefined) {
           const value = convertToFloat(val);
           if (value > 100) {
+            return false;
+          }
+          return true;
+        }
+        return false;
+      })
+      .test('participacao1', 'Soma das participações maior que 100%', (val) => {
+        if (val != undefined) {
+          const controladores = cliente.controladores.filter(
+            (i) =>
+              i.controladorPai == cleanCnpjCpf(formik.values.controladorPai)
+          );
+          //const proprietarios = cliente.pessoasProprietarias.filter((i) => i. == cleanCnpjCpf(formik.values.controladorPai));
+          let soma = controladores.reduce(
+            (acumulado, item) => acumulado + item.participacao,
+            0
+          );
+          soma = soma + convertToFloat(val);
+          console.log(val);
+          console.log(soma);
+          if (soma > 100) {
             return false;
           }
           return true;

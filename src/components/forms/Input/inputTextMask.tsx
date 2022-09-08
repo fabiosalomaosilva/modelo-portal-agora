@@ -31,7 +31,7 @@ export default function MaskInput(props: InputProps) {
   }
 
   return (
-    <div className='my-8'>
+    <div className='my-2 md:my-8'>
       <div className='h-7'>
         <label
           htmlFor='txtNomeUsuario'

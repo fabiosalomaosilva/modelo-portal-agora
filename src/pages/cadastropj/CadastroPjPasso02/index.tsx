@@ -188,7 +188,7 @@ export default function CadastroPjPasso02() {
       <section id='info-banco-passo02' className='my-6'>
         <TitleSeparator label='Informações bancárias:' />
         <div className='text-left'>
-          <div className='grid grid-cols-9 gap-4'>
+          <div className='grid grid-cols-1 md:grid-cols-9 gap-1 md:gap-4 m-0 md:-mt-6'>
             <div className='col-span-2'>
               <Select
                 label='Banco'
@@ -243,7 +243,7 @@ export default function CadastroPjPasso02() {
             </div>
           </div>
         </div>
-        <div className='text-right -mt-4'>
+        <div className='text-right md:-mt-4'>
           <Button type='button' size='sm' onClick={handleContaBanco}>
             Adicionar conta
           </Button>
@@ -316,7 +316,7 @@ export default function CadastroPjPasso02() {
         <section id='info-patrimonio-passo02' className='my-6'>
           <TitleSeparator label='Situação patrimonial:' />
           <div className='text-left'>
-            <div className='grid grid-cols-4 gap-4'>
+            <div className='grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-4 m-0 md:-mt-6'>
               <div>
                 <DecimalInput
                   label='Aplicação financeira'
@@ -376,7 +376,7 @@ export default function CadastroPjPasso02() {
         <section id='info-correspondencia-passo02' className='my-6'>
           <TitleSeparator label='Dados para Correspondência:' />
           <div className='text-left'>
-            <div className='grid grid-cols-4 gap-4'>
+            <div className='grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-4 m-0 md:-mt-6'>
               <div>
                 <Select
                   label='Tipo de endereço'

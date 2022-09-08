@@ -1,8 +1,5 @@
 export function convertToFloat(value: any): number {
-  if (!isNaN(value)) {
-    return parseFloat(value.toString().replace(',', '.').trim());
-  }
-  return 0;
+  return parseFloat(value.toString().replace(',', '.').trim());
 }
 
 export function cleanCnpjCpf(value: string): string {
