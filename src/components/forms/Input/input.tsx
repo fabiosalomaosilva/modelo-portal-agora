@@ -18,7 +18,7 @@ export interface InputProps {
   disabled?: boolean;
   max?: number | undefined;
   min?: number | undefined;
-  type: 'text' | 'number';
+  type: 'text' | 'number' | 'tel' | 'email';
 }
 
 export default function Input(props: InputProps) {
@@ -42,7 +42,7 @@ export default function Input(props: InputProps) {
         )}
       </div>
       <input
-        id={props.id}
+        id={props.id}        
         disabled={props.disabled}
         name={props.name}
         type={props.type}

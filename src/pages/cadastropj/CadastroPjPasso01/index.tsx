@@ -196,7 +196,7 @@ export default function CadastroPjPasso01() {
             <div className='grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-4 m-0 md:-mt-6'>
               <div>
                 <MaskInput
-                  type='text'
+                  type='tel'
                   mask='(99) 99999-9999'
                   placeholder='Telefone'
                   description='Comercial*'
@@ -212,7 +212,7 @@ export default function CadastroPjPasso01() {
               </div>
               <div>
                 <Input
-                  type='text'
+                  type='tel'
                   placeholder='Ramal'
                   label='Ramal'
                   id='ramal'
@@ -226,7 +226,8 @@ export default function CadastroPjPasso01() {
               </div>
               <div>
                 <Input
-                  type='text'
+                  type='email'
+                  className='textfield'
                   placeholder='E-mail'
                   label='E-mail'
                   id='email'
@@ -240,7 +241,7 @@ export default function CadastroPjPasso01() {
               </div>
               <div>
                 <Input
-                  type='text'
+                  type='email'
                   placeholder='E-mail'
                   label='Confirmar e-mail'
                   id='confirmarEmail'
@@ -262,7 +263,7 @@ export default function CadastroPjPasso01() {
             <div className='grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-4 m-0 md:-mt-6'>
               <div>
                 <MaskInput
-                  type='text'
+                  type='tel'
                   mask='99.999.999/9999-99'
                   placeholder='CNPJ'
                   label='CNPJ'
@@ -394,7 +395,7 @@ export default function CadastroPjPasso01() {
             <div className='grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-4 m-0 md:-mt-6'>
               <div>
                 <MaskInput
-                  type='text'
+                  type='tel'
                   mask='99.999-999'
                   placeholder='CEP'
                   label='CEP'
@@ -421,7 +422,7 @@ export default function CadastroPjPasso01() {
                   onBlur={formik.handleBlur}
                 />
               </div>
-              <div className='col-span-2'>
+              <div className='md:col-span-2'>
                 <Input
                   type='text'
                   placeholder='Endereço'

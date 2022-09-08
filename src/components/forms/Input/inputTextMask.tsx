@@ -19,7 +19,7 @@ export interface InputProps {
   touched?: boolean | undefined;
   max?: number;
   min?: number;
-  type: 'text' | 'number';
+  type: 'text' | 'tel';
   ref?: React.MutableRefObject<null>;
 }
 
