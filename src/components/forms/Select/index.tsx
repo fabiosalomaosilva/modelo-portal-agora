@@ -33,12 +33,12 @@ export default function Select(props: SelectProps) {
       case true:
         visibility = '';
         break;
-        case 'false':
-          visibility = 'hidden';
-          break;
-        case 'true':
-          visibility = '';
-          break;
+      case 'false':
+        visibility = 'hidden';
+        break;
+      case 'true':
+        visibility = '';
+        break;
       default:
         visibility = '';
     }

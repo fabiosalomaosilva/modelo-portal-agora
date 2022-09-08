@@ -49,29 +49,34 @@ const rootSlice = createSlice({
     showPanelControladoras: false,
     showPanelPessoaProprietaria: false,
     showMenuControladora: true,
+    textoMenuControladoraPessoaProprietaria: 'Controladora ou pessoa proprietária',
   },
   reducers: {
     setShowPanelControladoras: (state) => {
       state.showPanelControladoras = true;
       state.showPanelPessoaProprietaria = false;
       state.showMenuControladora = false;
+      state.textoMenuControladoraPessoaProprietaria = 'Cadastro de controladora';      
     },
     setHidePanelControladoras: (state) => {
       state.showPanelControladoras = false;
       state.showPanelPessoaProprietaria = false;
       state.showMenuControladora = true;
       state.selectedControladora = initialSelectedControlador;
+      state.textoMenuControladoraPessoaProprietaria = 'Controladora ou pessoa proprietária';
     },
     setShowPanelPessoaProprietaria: (state) => {
       state.showPanelControladoras = false;
       state.showPanelPessoaProprietaria = true;
       state.showMenuControladora = false;
+      state.textoMenuControladoraPessoaProprietaria = 'Cadastro de pessoa proprietária';      
     },
     setHidePanelPessoaProprietaria: (state) => {
       state.showPanelControladoras = false;
       state.showPanelPessoaProprietaria = false;
       state.showMenuControladora = true;
       state.selectedPessoaProprietaria = initialSelectedPessoaProprietaria;
+      state.textoMenuControladoraPessoaProprietaria = 'Controladora ou pessoa proprietária';
     },
     setCliente: (state, action: ActionCliente) => {
       state.cliente = action.payload;
@@ -142,6 +147,9 @@ const rootSlice = createSlice({
 
     setSelectedControlador: (state, action: ActionControlador) => {
       state.showPanelControladoras = true;
+      state.showPanelPessoaProprietaria = false;
+      state.showMenuControladora = false;
+      state.textoMenuControladoraPessoaProprietaria = 'Cadastro de controladora';      
       state.selectedControladora = action.payload;
     },
     updateSelectedControlador: (state, action: ActionUpdateControlador) => {

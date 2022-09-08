@@ -36,6 +36,10 @@ export default function CadastroPjPasso03() {
   const showMenuControladora = useSelector(
     (state: RootState) => state.showMenuControladora
   );
+  const textoMenuControladoraPessoaProprietaria = useSelector(
+    (state: RootState) => state.textoMenuControladoraPessoaProprietaria
+  );
+  
   function dispatch(arg0: {
     payload: import('../../../models/conta').Controlador;
     type: string;
@@ -62,7 +66,7 @@ export default function CadastroPjPasso03() {
       </section>
 
       <section id='info-banco-passo02' className='my-6'>
-        <TitleSeparator label='Controladora ou pessoa proprietária:' />
+        <TitleSeparator label={textoMenuControladoraPessoaProprietaria} />
         <div className='text-left'>
           <MenuControladoras visible={showMenuControladora} />
           <FormControladora visible={showControladora} />

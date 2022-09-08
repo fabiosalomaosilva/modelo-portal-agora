@@ -53,5 +53,5 @@ export const intialDataCliente: Cliente = {
     temResidenciafiscalOutroPais: false,
     possuiVistoPermanenteOutroPais: false,    
     nifs: [],
-    controladorPai: '',
+    controladorPai: '0',
   };

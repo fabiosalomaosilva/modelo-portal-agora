@@ -67,7 +67,11 @@ export default function FormControladora(props: FormControladoraProps) {
         return cnpjValidation(val as string);
       })
       .test('cnpj1', 'CNPJ já foi cadastrado', (val) => {
-        if (val != undefined && val.length === 18) {
+        if (val != undefined && cleanCnpjCpf(val).length === 14) {
+          console.log(selectedControlador.cnpj);
+          if (selectedControlador.cnpj === cleanCnpjCpf(val)) {
+            return true;
+          }
           const res = cliente.controladores.find(
             (i) => i.cnpj == cleanCnpjCpf(val)
           );
@@ -101,8 +105,16 @@ export default function FormControladora(props: FormControladoraProps) {
             (acumulado, item) => acumulado + item.participacao,
             0
           );
+          const participacaoWihtExistsOnSelected = cliente.controladores?.find(
+            (i) => i.id === selectedControlador.id
+          )?.participacao;
           soma = soma + convertToFloat(val);
-          console.log(val);
+          soma =
+            soma -
+            (participacaoWihtExistsOnSelected === undefined
+              ? 0
+              : convertToFloat(participacaoWihtExistsOnSelected));
+
           console.log(soma);
           if (soma > 100) {
             return false;
@@ -175,11 +187,15 @@ export default function FormControladora(props: FormControladoraProps) {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           >
-            {cliente.controladores?.map((controlador) => (
-              <option key={controlador.id} value={controlador.cnpj}>
-                {controlador.razaoSocial}
-              </option>
-            ))}
+            {cliente.controladores?.map((controlador) => {
+              if (controlador.id != selectedControlador.id) {
+                return (
+                  <option key={controlador.id} value={controlador.cnpj}>
+                    {controlador.razaoSocial}
+                  </option>
+                );
+              }
+            })}
           </Select>
         </div>
 

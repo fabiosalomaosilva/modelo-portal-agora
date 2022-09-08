@@ -52,11 +52,11 @@ export default function FormPessoaProprietaria(
   const validationSchema = Yup.object().shape({
     nome: Yup.string().required('O campo Razão social é obrigatório'),
     cpf: Yup.string()
-      .required('O campo CNPJ é obrigatório')
-      .test('cnpj', 'CNPJ inválido', (val) => {
+      .required('O campo CPF é obrigatório')
+      .test('cpf', 'CPF inválido', (val) => {
         return cnpjValidation(val as string);
       })
-      .test('cnpj1', 'CNPJ já foi cadastrado', (val) => {
+      .test('cpf1', 'CPF já foi cadastrado', (val) => {
         if (val != undefined && val.length === 18) {
           const res = cliente.controladores.find(
             (i) => i.cnpj == cleanCnpjCpf(val)
@@ -82,19 +82,38 @@ export default function FormPessoaProprietaria(
         }
         return false;
       })
+      .test('participacao', 'Valor não pode ser inferior a 0,01%', (val) => {
+        if (val != undefined) {
+          const value = convertToFloat(val);
+          if (value < 0.01) {
+            return false;
+          }
+          return true;
+        }
+        return false;
+      })
       .test('participacao1', 'Soma das participações maior que 100%', (val) => {
         if (val != undefined) {
           const controladores = cliente.controladores.filter(
             (i) =>
               i.controladorPai == cleanCnpjCpf(formik.values.controladorPai)
           );
-          //const proprietarios = cliente.pessoasProprietarias.filter((i) => i. == cleanCnpjCpf(formik.values.controladorPai));
-          let soma = controladores.reduce(
+          const proprietarios = cliente.pessoasProprietarias.filter(
+            (i) =>
+              i.controladorPai == cleanCnpjCpf(formik.values.controladorPai)
+          );
+          let somaControladores = controladores.reduce(
             (acumulado, item) => acumulado + item.participacao,
             0
           );
-          soma = soma + convertToFloat(val);
-          console.log(val);
+          let somaProprietarios = proprietarios.reduce(
+            (acumulado, item) => acumulado + item.participacao,
+            0
+          );
+          somaProprietarios = somaProprietarios - convertToFloat(cliente.pessoasProprietarias?.find(i => i.id === selectedPessoaProprietaria.id)?.participacao);
+          const soma =
+            (somaControladores + somaProprietarios + convertToFloat(val));
+          console.log(formik.values.controladorPai);
           console.log(soma);
           if (soma > 100) {
             return false;
@@ -108,10 +127,18 @@ export default function FormPessoaProprietaria(
       is: 'true',
       then: Yup.string().required('O campo Vínculo com a Ágora é obrigatório'),
     }),
-    pessoaExpostaPoliticamente: Yup.boolean(),
-    possuiOutraNacionalidade: Yup.boolean().default(false),
-    temResidenciafiscalOutroPais: Yup.boolean().default(false),
-    possuiVistoPermanenteOutroPais: Yup.boolean().default(false),
+    pessoaExpostaPoliticamente: Yup.boolean().required(
+      'O campo Pessoa exposta politicamente é obrigatório'
+    ),
+    possuiOutraNacionalidade: Yup.boolean()
+      .default(false)
+      .required('O campo Possui outra nacionalidade é obrigatório'),
+    temResidenciafiscalOutroPais: Yup.boolean()
+      .default(false)
+      .required('O campo Tem residência fiscal em outro país é obrigatório'),
+    possuiVistoPermanenteOutroPais: Yup.boolean()
+      .default(false)
+      .required('O campo Possui visto permanente em outro país é obrigatório'),
   });
 
   const onSubmit = (values: PessoaProprietaria) => {
@@ -154,12 +181,10 @@ export default function FormPessoaProprietaria(
   }, [showFormPessoaProprietaria]);
 
   return (
-    <div>
+    <div className={`${textClass}`}>
       <form onSubmit={formik.handleSubmit}>
-        <div
-          className={`grid grid-cols-1 md:grid-cols-5 gap-1 md:gap-4 ${textClass}`}
-        >
-          <div className='md:col-span-5'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-1 md:gap-4 sm:gap-2'>
+          <div className='sm:col-span-2 md:col-span-3 xl:col-span-5'>
             <Select
               label='PessoaProprietaria'
               id='controladorPai'
@@ -282,17 +307,56 @@ export default function FormPessoaProprietaria(
             <option value='Sócios'>Sócios</option>
             <option value='Clubes'>Clubes</option>
           </Select>
+
           <Select
             label='Pessoa Exposta Politicamente?'
             id='pessoaExpostaPoliticamente'
             name='pessoaExpostaPoliticamente'
-            value={
-              formik.values.pessoaExpostaPoliticamente == true
-                ? 'true'
-                : 'false'
-            }
+            value={formik.values.pessoaExpostaPoliticamente.toString()}
             error={formik.errors.pessoaExpostaPoliticamente}
             touched={formik.touched.pessoaExpostaPoliticamente}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          >
+            <option value='false'>Não</option>
+            <option value='true'>Sim</option>
+          </Select>
+
+          <Select
+            label='Possui outra nacionalidade?'
+            id='possuiOutraNacionalidade'
+            name='possuiOutraNacionalidade'
+            value={formik.values.possuiOutraNacionalidade.toString()}
+            error={formik.errors.possuiOutraNacionalidade}
+            touched={formik.touched.possuiOutraNacionalidade}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          >
+            <option value='false'>Não</option>
+            <option value='true'>Sim</option>
+          </Select>
+
+          <Select
+            label='Tem residência fiscal em outro país?'
+            id='temResidenciafiscalOutroPais'
+            name='temResidenciafiscalOutroPais'
+            value={formik.values.temResidenciafiscalOutroPais.toString()}
+            error={formik.errors.temResidenciafiscalOutroPais}
+            touched={formik.touched.temResidenciafiscalOutroPais}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          >
+            <option value='false'>Não</option>
+            <option value='true'>Sim</option>
+          </Select>
+
+          <Select
+            label='Visto permanente em outro país?'
+            id='possuiVistoPermanenteOutroPais'
+            name='possuiVistoPermanenteOutroPais'
+            value={formik.values.possuiVistoPermanenteOutroPais.toString()}
+            error={formik.errors.possuiVistoPermanenteOutroPais}
+            touched={formik.touched.possuiVistoPermanenteOutroPais}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           >
