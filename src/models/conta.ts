@@ -37,6 +37,7 @@ export interface PessoaProprietaria {
     temResidenciafiscalOutroPais: boolean;
     possuiVistoPermanenteOutroPais: boolean;    
     nifs: Nif[];
+    controladorPai: string;
 }
 
 export interface Administrador {

@@ -1,7 +1,16 @@
-import { ContaBancaria, Controlador } from './../models/conta';
+import {
+  ContaBancaria,
+  Controlador,
+  PessoaProprietaria,
+} from './../models/conta';
 import { createSlice } from '@reduxjs/toolkit';
 import { Cliente } from '../models/cliente';
 import { v4 as uuidv4 } from 'uuid';
+import {
+  initialSelectedPessoaProprietaria,
+  initialSelectedControlador,
+  intialDataCliente,
+} from './initialValues';
 
 interface ActionCliente {
   type: string;
@@ -18,60 +27,27 @@ interface ActionControlador {
   payload: Controlador;
 }
 
+interface ActionPessoaProprietaria {
+  type: string;
+  payload: PessoaProprietaria;
+}
 interface ActionUpdateControlador {
   type: string;
   payload: { field: string; value: any };
 }
 
 const local = JSON.parse(localStorage.getItem('currentClient') as string);
-const intialDataCliente: Cliente ={
-  nomeUsuario: '',
-  principalObjetivoComercial: '0',
-  telefone: '',
-  email: '',
-  confirmarEmail: '',
-  cnpj: '',
-  denominacaoComercial: '',
-  formaConstituicao: '',
-  principalObjetoSocial: '0',
-  principalAtividade: '0',
-  possuiVinculocomAgora: '0',
-  endereco: '',
-  numero: '',
-  complemento: '',
-  bairro: '',
-  estado: '',
-  cidade: '',
-  informacoesSocietarias: '',
-  operoCarteira: '',
-  tipoEnderecoCorrespondencia: '0',
-  especificacaoEnderecoCorrespondencia: '',
-  contasBancarias: [],
-  controladores: [],
-  administradores: [],
-  pessoasProprietarias: [],
-  procuradores: [],
-  emissoresOrdem: [],
-}; 
 const initialState: Cliente =
-  local !== null && local !== ''
-    ? local
-    : intialDataCliente;
-
-const initiSelectedControlador: Controlador = {
-  id: '',
-  razaoSocial: '',
-  cnpj: '',
-  participacao: 0,
-  controladorPai: '0',
-};
+  local !== null && local !== '' ? local : intialDataCliente;
 
 const rootSlice = createSlice({
   name: 'root',
   initialState: {
     cliente: initialState,
-    selectedControladora: initiSelectedControlador,
+    selectedControladora: initialSelectedControlador,
+    selectedPessoaProprietaria: initialSelectedPessoaProprietaria,
     showPanelControladoras: false,
+    showPanelPessoaProprietaria: false,
   },
   reducers: {
     setShowPanelControladoras: (state) => {
@@ -79,7 +55,14 @@ const rootSlice = createSlice({
     },
     setHidePanelControladoras: (state) => {
       state.showPanelControladoras = false;
-      state.selectedControladora = initiSelectedControlador;
+      state.selectedControladora = initialSelectedControlador;
+    },
+    setShowPanelPessoaProprietaria: (state) => {
+      state.showPanelPessoaProprietaria = true;
+    },
+    setHidePanelPessoaProprietaria: (state) => {
+      state.showPanelPessoaProprietaria = false;
+      state.selectedPessoaProprietaria = initialSelectedPessoaProprietaria;
     },
     setCliente: (state, action: ActionCliente) => {
       state.cliente = action.payload;
@@ -127,6 +110,27 @@ const rootSlice = createSlice({
       state.cliente.controladores.splice(index, 1);
       localStorage.setItem('currentClient', JSON.stringify(state.cliente));
     },
+    addPessoaProprietaria: (state, action: ActionPessoaProprietaria) => {
+      state.cliente.pessoasProprietarias.push(action.payload);
+      localStorage.setItem('currentClient', JSON.stringify(state.cliente));
+    },
+    updatePessoaProprietaria: (state, action: ActionPessoaProprietaria) => {
+      const index = state.cliente.pessoasProprietarias.findIndex(
+        (c) => c.id === action.payload.id
+      );
+      var item = state.cliente.pessoasProprietarias[index];
+      item = action.payload;
+      state.cliente.pessoasProprietarias[index] = item;
+      localStorage.setItem('currentClient', JSON.stringify(state.cliente));
+    },
+    deletePessoaProprietaria: (state, action: ActionPessoaProprietaria) => {
+      const index = state.cliente.pessoasProprietarias.findIndex(
+        (c) => c.id === action.payload.id
+      );
+      state.cliente.pessoasProprietarias.splice(index, 1);
+      localStorage.setItem('currentClient', JSON.stringify(state.cliente));
+    },
+
     setSelectedControlador: (state, action: ActionControlador) => {
       state.showPanelControladoras = true;
       state.selectedControladora = action.payload;
@@ -153,14 +157,19 @@ const rootSlice = createSlice({
 export const {
   setShowPanelControladoras,
   setHidePanelControladoras,
+  setShowPanelPessoaProprietaria,
+  setHidePanelPessoaProprietaria,
   setCliente,
   addContaBancaria,
   deleteContaBancaria,
   addControladora,
   updateControladora,
   deleteControladora,
+  addPessoaProprietaria,
+  updatePessoaProprietaria,
+  deletePessoaProprietaria,
   setSelectedControlador,
   updateSelectedControlador,
-  cleanCliente
+  cleanCliente,
 } = rootSlice.actions;
 export default rootSlice.reducer;
