@@ -169,7 +169,6 @@ export default function CadastroPjPasso01() {
               error={formik.errors.nomeUsuario}
               touched={formik.touched.nomeUsuario}
             />
-            <Separator />
             <Select
               placeholder='Nome de usuário'
               label='Principal objetivo comercial:'
@@ -194,10 +193,8 @@ export default function CadastroPjPasso01() {
               </option>
             </Select>
 
-            <Separator />
-
-            <div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
-              <div className='col'>
+            <div className='grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-4 m-0 md:-mt-6'>
+              <div>
                 <MaskInput
                   type='text'
                   mask='(99) 99999-9999'
@@ -261,7 +258,7 @@ export default function CadastroPjPasso01() {
 
         <section id='info-societaria-passo01' className='my-6'>
           <TitleSeparator label='Informações empresariais:' />
-          <div className='text-left'>
+          <div className='text-left md:mt-4'>
             <div className='grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-4 m-0 md:-mt-6'>
               <div>
                 <MaskInput
