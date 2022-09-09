@@ -9,12 +9,17 @@ import { v4 as uuidv4 } from 'uuid';
 import Input from '../../../../../components/forms/Input/input';
 import {
   addPessoaProprietaria,
+  setHideFormFatca,
   setHidePanelPessoaProprietaria,
+  setShowFormFatca,
   updatePessoaProprietaria,
 } from '../../../../../store/rootSlice';
 import MaskInput from '../../../../../components/forms/Input/inputTextMask';
 import DecimalInput from '../../../../../components/forms/Input/inputDecimal';
-import { cnpjValidation } from '../../../../../utils/validations/validationCnpj';
+import {
+  cnpjValidation,
+  cpfValidation,
+} from '../../../../../utils/validations/validationCnpj';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import {
@@ -23,6 +28,7 @@ import {
 } from '../../../../../utils/converters/converters';
 import { initialSelectedPessoaProprietaria } from '../../../../../store/initialValues';
 import Separator from '../../../../../components/forms/Separator';
+import FormFatca from '../FormFatca';
 
 export interface FormPessoaProprietariaProps {
   visible: boolean;
@@ -39,6 +45,8 @@ export default function FormPessoaProprietaria(
   const selectedPessoaProprietaria = useSelector(
     (state: RootState) => state.selectedPessoaProprietaria
   );
+  const showFormFatca = useSelector((state: RootState) => state.showFormFatca);
+
   const dispatch = useDispatch();
   const cnpjInput = useRef(null);
   let textClass = '';
@@ -54,12 +62,12 @@ export default function FormPessoaProprietaria(
     cpf: Yup.string()
       .required('O campo CPF é obrigatório')
       .test('cpf', 'CPF inválido', (val) => {
-        return cnpjValidation(val as string);
+        return cpfValidation(cleanCnpjCpf(val as string));
       })
       .test('cpf1', 'CPF já foi cadastrado', (val) => {
-        if (val != undefined && val.length === 18) {
-          const res = cliente.controladores.find(
-            (i) => i.cnpj == cleanCnpjCpf(val)
+        if (val != undefined && cleanCnpjCpf(val).length === 11) {
+          const res = cliente.pessoasProprietarias.find(
+            (i) => i.cpf == cleanCnpjCpf(val)
           );
           if (res) {
             return false;
@@ -107,14 +115,17 @@ export default function FormPessoaProprietaria(
             0
           );
           let somaProprietarios = proprietarios.reduce(
-            (acumulado, item) => acumulado + item.participacao,
+            (acumulado, item) => acumulado + convertToFloat(item.participacao),
             0
           );
-          somaProprietarios = somaProprietarios - convertToFloat(cliente.pessoasProprietarias?.find(i => i.id === selectedPessoaProprietaria.id)?.participacao);
-          const soma =
-            (somaControladores + somaProprietarios + convertToFloat(val));
-          console.log(formik.values.controladorPai);
-          console.log(soma);
+          const participacaoAtual = cliente.pessoasProprietarias?.find(
+            (i) => i.id === selectedPessoaProprietaria.id
+          )?.participacao;
+          if (participacaoAtual != undefined && convertToFloat(participacaoAtual) > 0) {
+            somaProprietarios =somaProprietarios - convertToFloat(participacaoAtual);
+          }
+
+          const soma = somaControladores + somaProprietarios + convertToFloat(val);
           if (soma > 100) {
             return false;
           }
@@ -124,7 +135,7 @@ export default function FormPessoaProprietaria(
       }),
     tipoVinculo: Yup.string().required('O campo Tipo de vínculo é obrigatório'),
     vinculoComAgora: Yup.string().when('tipoVinculo', {
-      is: 'true',
+      is: true,
       then: Yup.string().required('O campo Vínculo com a Ágora é obrigatório'),
     }),
     pessoaExpostaPoliticamente: Yup.boolean().required(
@@ -142,21 +153,30 @@ export default function FormPessoaProprietaria(
   });
 
   const onSubmit = (values: PessoaProprietaria) => {
-    formik.setFieldValue(
-      'participacao',
-      convertToFloat(formik.values.participacao)
-    );
-    formik.setFieldValue('cpf', cleanCnpjCpf(formik.values.cpf));
-    if (
-      cliente.pessoasProprietarias.filter(
-        (i) => i.id === selectedPessoaProprietaria.id
-      ).length === 0
-    ) {
-      formik.setFieldValue('id', uuidv4());
-      dispatch(addPessoaProprietaria(formik.values));
-    } else {
-      dispatch(updatePessoaProprietaria(formik.values));
+    const pessoa: PessoaProprietaria = {
+      id: formik.values.id,
+      controladorPai: formik.values.controladorPai,
+      nome: formik.values.nome,
+      cpf: cleanCnpjCpf(formik.values.cpf),
+      orgaoEmissor: formik.values.orgaoEmissor,
+      participacao: convertToFloat(formik.values.participacao),
+      pessoaExpostaPoliticamente: formik.values.pessoaExpostaPoliticamente,
+      possuiOutraNacionalidade: formik.values.possuiOutraNacionalidade,
+      possuiVistoPermanenteOutroPais: formik.values.possuiOutraNacionalidade,
+      temResidenciafiscalOutroPais: formik.values.temResidenciafiscalOutroPais,
+      vinculoComAgora: formik.values.vinculoComAgora,
+      rg: formik.values.rg,
+      tipoVinculo: formik.values.tipoVinculo === '0' ? '' : formik.values.tipoVinculo,
+      nifs: formik.values.nifs
     }
+
+    const isUpdate = cliente.pessoasProprietarias.filter((i) => i.id === pessoa.id).length === 0;
+    if (isUpdate) {
+      dispatch(addPessoaProprietaria(pessoa));
+    } else {
+      dispatch(updatePessoaProprietaria(pessoa));
+    }
+    
     formik.resetForm();
     dispatch(setHidePanelPessoaProprietaria());
   };
@@ -175,6 +195,7 @@ export default function FormPessoaProprietaria(
   });
 
   useEffect(() => {
+    formik.setFieldValue('id', uuidv4());
     if (selectedPessoaProprietaria.cpf !== '') {
       formik.setValues(selectedPessoaProprietaria);
     }
@@ -182,11 +203,12 @@ export default function FormPessoaProprietaria(
 
   return (
     <div className={`${textClass}`}>
+      <span>{formik.isValid.toString()}</span>
       <form onSubmit={formik.handleSubmit}>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-1 md:gap-4 sm:gap-2'>
           <div className='sm:col-span-2 md:col-span-3 xl:col-span-5'>
             <Select
-              label='PessoaProprietaria'
+              label='Controladora'
               id='controladorPai'
               name='controladorPai'
               value={formik.values.controladorPai}
@@ -195,9 +217,9 @@ export default function FormPessoaProprietaria(
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             >
-              {cliente.pessoasProprietarias?.map((pessoa) => (
-                <option key={pessoa.id} value={pessoa.cpf}>
-                  {pessoa.nome}
+              {cliente.controladores?.map((item) => (
+                <option key={item.id} value={item.cnpj}>
+                  {item.razaoSocial}
                 </option>
               ))}
             </Select>
@@ -329,7 +351,18 @@ export default function FormPessoaProprietaria(
             value={formik.values.possuiOutraNacionalidade.toString()}
             error={formik.errors.possuiOutraNacionalidade}
             touched={formik.touched.possuiOutraNacionalidade}
-            onChange={formik.handleChange}
+            onChange={(e) => {
+              console.log(e.target.value);
+              if (e.target.value == 'true') {
+                console.log('Deu certo no true');
+                dispatch(setShowFormFatca());
+              }
+              if (e.target.value == 'false') {
+                console.log('Deu certo no false');
+                dispatch(setHideFormFatca());
+              }
+              formik.handleChange(e);
+            }}
             onBlur={formik.handleBlur}
           >
             <option value='false'>Não</option>
@@ -364,6 +397,10 @@ export default function FormPessoaProprietaria(
             <option value='true'>Sim</option>
           </Select>
         </div>
+        <FormFatca
+          visible={showFormFatca}
+          pessoaProprietariaId={initialValues.id}
+        />
         <Separator />
         <div className='text-right mt-5'>
           <Button

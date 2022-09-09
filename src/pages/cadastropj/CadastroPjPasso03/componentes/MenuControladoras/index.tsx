@@ -1,6 +1,7 @@
 import React, { createRef, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../../../../components/forms/Button';
+import { PessoaProprietaria } from '../../../../../models/conta';
 import { RootState } from '../../../../../store';
 import {
   deleteControladora,
@@ -17,14 +18,26 @@ export default function MenuControladoras(props: MenuControladorasProps) {
   const cliente = useSelector((state: RootState) => state.cliente);
   const dispatch = useDispatch();
 
-  const arrLength = cliente.controladores.length;
-  const elRefs = React.useRef([]);
-
-  if (elRefs.current.length !== arrLength) {
-    elRefs.current = Array()
-      .fill(arrLength)
-      .map((_, i) => elRefs.current[i] || createRef());
-  }
+  let dados: PessoaProprietaria[] = cliente.pessoasProprietarias.length > 0 ? cliente.pessoasProprietarias : [];
+  cliente.controladores.map((item) => {
+    const pessoa: PessoaProprietaria = {
+      id: item.id,
+      nome: item.razaoSocial,
+      cpf: item.cnpj,
+      controladorPai: item.controladorPai,
+      participacao: item.participacao,
+      rg: 0,
+      orgaoEmissor: 'false',
+      pessoaExpostaPoliticamente: false,
+      tipoVinculo: 'false',
+      possuiOutraNacionalidade: false,
+      possuiVistoPermanenteOutroPais: false,
+      temResidenciafiscalOutroPais: false,
+      vinculoComAgora: false,
+      nifs: []
+    };
+    dados = [...dados, pessoa];
+  });
 
   let textClass = 'flex';
   if (props.visible) {
@@ -54,9 +67,9 @@ export default function MenuControladoras(props: MenuControladorasProps) {
         </div>
 
         <ul id='card-list'>
-          {cliente.controladores.map((item) => {
+          {dados.map((item: any) => {
             if (item.controladorPai === '0') {
-              return <Row key={item.id} item={item} />;
+              return <Row key={item.id} item={item} dados={dados} />;
             }
           })}
         </ul>

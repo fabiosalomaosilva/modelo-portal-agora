@@ -19,8 +19,9 @@ export interface Nif {
     id: string;
     referencia: string;
     pais: string;
-    numero: number;
-    motivo: string;
+    numero?: number;
+    motivo?: string;
+    pessoaControladoraId: string;
 }
 
 export interface PessoaProprietaria {
@@ -30,13 +31,13 @@ export interface PessoaProprietaria {
     rg: number;    
     orgaoEmissor: string;
     participacao: number;
-    tipoVinculo: string;
+    tipoVinculo?: string;
     vinculoComAgora: boolean;
     pessoaExpostaPoliticamente: boolean;
     possuiOutraNacionalidade: boolean;
     temResidenciafiscalOutroPais: boolean;
     possuiVistoPermanenteOutroPais: boolean;    
-    nifs: Nif[];
+    nifs?: Nif[];
     controladorPai: string;
 }
 

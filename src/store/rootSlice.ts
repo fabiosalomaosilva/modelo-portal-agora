@@ -1,6 +1,7 @@
 import {
   ContaBancaria,
   Controlador,
+  Nif,
   PessoaProprietaria,
 } from './../models/conta';
 import { createSlice } from '@reduxjs/toolkit';
@@ -10,6 +11,8 @@ import {
   initialSelectedPessoaProprietaria,
   initialSelectedControlador,
   intialDataCliente,
+  initialFatca,
+  initialFatcas,
 } from './initialValues';
 
 interface ActionCliente {
@@ -35,7 +38,10 @@ interface ActionUpdateControlador {
   type: string;
   payload: { field: string; value: any };
 }
-
+interface ActionFatca {
+  type: string;
+  payload: Nif;
+}
 const local = JSON.parse(localStorage.getItem('currentClient') as string);
 const initialState: Cliente =
   local !== null && local !== '' ? local : intialDataCliente;
@@ -46,37 +52,52 @@ const rootSlice = createSlice({
     cliente: initialState,
     selectedControladora: initialSelectedControlador,
     selectedPessoaProprietaria: initialSelectedPessoaProprietaria,
+    selectedFatca: initialFatca,
     showPanelControladoras: false,
     showPanelPessoaProprietaria: false,
     showMenuControladora: true,
-    textoMenuControladoraPessoaProprietaria: 'Controladora ou pessoa proprietária',
+    showFormFatca: false,
+    textoMenuControladoraPessoaProprietaria:
+      'Controladora ou pessoa proprietária',
+    nifsTemp: initialFatcas,
   },
   reducers: {
+    setShowFormFatca: (state) => {
+      state.showFormFatca = true;
+    },
+    setHideFormFatca: (state) => {
+      state.showFormFatca = false;
+      state.selectedFatca = initialFatca;
+    },
     setShowPanelControladoras: (state) => {
       state.showPanelControladoras = true;
       state.showPanelPessoaProprietaria = false;
       state.showMenuControladora = false;
-      state.textoMenuControladoraPessoaProprietaria = 'Cadastro de controladora';      
+      state.textoMenuControladoraPessoaProprietaria =
+        'Cadastro de controladora';
     },
     setHidePanelControladoras: (state) => {
       state.showPanelControladoras = false;
       state.showPanelPessoaProprietaria = false;
       state.showMenuControladora = true;
       state.selectedControladora = initialSelectedControlador;
-      state.textoMenuControladoraPessoaProprietaria = 'Controladora ou pessoa proprietária';
+      state.textoMenuControladoraPessoaProprietaria =
+        'Controladora ou pessoa proprietária';
     },
     setShowPanelPessoaProprietaria: (state) => {
       state.showPanelControladoras = false;
       state.showPanelPessoaProprietaria = true;
       state.showMenuControladora = false;
-      state.textoMenuControladoraPessoaProprietaria = 'Cadastro de pessoa proprietária';      
+      state.textoMenuControladoraPessoaProprietaria =
+        'Cadastro de pessoa proprietária';
     },
     setHidePanelPessoaProprietaria: (state) => {
       state.showPanelControladoras = false;
       state.showPanelPessoaProprietaria = false;
       state.showMenuControladora = true;
       state.selectedPessoaProprietaria = initialSelectedPessoaProprietaria;
-      state.textoMenuControladoraPessoaProprietaria = 'Controladora ou pessoa proprietária';
+      state.textoMenuControladoraPessoaProprietaria =
+        'Controladora ou pessoa proprietária';
     },
     setCliente: (state, action: ActionCliente) => {
       state.cliente = action.payload;
@@ -144,12 +165,28 @@ const rootSlice = createSlice({
       state.cliente.pessoasProprietarias.splice(index, 1);
       localStorage.setItem('currentClient', JSON.stringify(state.cliente));
     },
-
+    addFatca: (state, action: ActionFatca) => {
+      state.nifsTemp.push(action.payload);
+      localStorage.setItem('currentClient', JSON.stringify(state.cliente));
+    },
+    updateFatca: (state, action: ActionFatca) => {
+      const index = state.nifsTemp.findIndex((c) => c.id === action.payload.id);
+      var item = state.nifsTemp[index];
+      item = action.payload;
+      state.nifsTemp[index] = item;
+      localStorage.setItem('currentClient', JSON.stringify(state.cliente));
+    },
+    deleteFatca: (state, action: ActionFatca) => {
+      const index = state.nifsTemp.findIndex((c) => c.id === action.payload.id);
+      state.nifsTemp.splice(index, 1);
+      localStorage.setItem('currentClient', JSON.stringify(state.cliente));
+    },
     setSelectedControlador: (state, action: ActionControlador) => {
       state.showPanelControladoras = true;
       state.showPanelPessoaProprietaria = false;
       state.showMenuControladora = false;
-      state.textoMenuControladoraPessoaProprietaria = 'Cadastro de controladora';      
+      state.textoMenuControladoraPessoaProprietaria =
+        'Cadastro de controladora';
       state.selectedControladora = action.payload;
     },
     updateSelectedControlador: (state, action: ActionUpdateControlador) => {
@@ -188,5 +225,10 @@ export const {
   setSelectedControlador,
   updateSelectedControlador,
   cleanCliente,
+  setShowFormFatca,
+  setHideFormFatca,
+  addFatca,
+  updateFatca,
+  deleteFatca,
 } = rootSlice.actions;
 export default rootSlice.reducer;
