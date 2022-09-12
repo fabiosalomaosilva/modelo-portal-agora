@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
@@ -8,7 +8,6 @@ import { v4 as uuidv4 } from 'uuid';
 import Button from '../../../components/forms/Button';
 import Input from '../../../components/forms/Input/input';
 import Select from '../../../components/forms/Select';
-import Separator from '../../../components/forms/Separator';
 import TitleSeparator from '../../../components/forms/TitleSeparator';
 import { ContaBancaria } from '../../../models/conta';
 import { RootState } from '../../../store';

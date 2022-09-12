@@ -1,4 +1,5 @@
 import {
+  Administrador,
   ContaBancaria,
   Controlador,
   Nif,
@@ -23,6 +24,11 @@ interface ActionCliente {
 interface ActionContaBancaria {
   type: string;
   payload: ContaBancaria;
+}
+
+interface ActionAdministrador {
+  type: string;
+  payload: Administrador;
 }
 
 interface ActionControlador {
@@ -108,15 +114,15 @@ const rootSlice = createSlice({
       localStorage.clear();
     },
     addContaBancaria: (state, action: ActionContaBancaria) => {
-      const conta: ContaBancaria = {
-        id: action.payload.id,
-        agencia: action.payload.agencia,
-        banco: action.payload.banco,
-        conta: action.payload.conta,
-        tipo: action.payload.tipo,
-        digito: action.payload.digito        
-      }
-      state.cliente.contasBancarias.push(conta);
+      // const conta: ContaBancaria = {
+      //   id: action.payload.id,
+      //   agencia: action.payload.agencia,
+      //   banco: action.payload.banco,
+      //   conta: action.payload.conta,
+      //   tipo: action.payload.tipo,
+      //   digito: action.payload.digito
+      // }
+      state.cliente.contasBancarias.push(action.payload);
       localStorage.setItem('currentClient', JSON.stringify(state.cliente));
     },
     deleteContaBancaria: (state, action: ActionContaBancaria) => {
@@ -124,6 +130,17 @@ const rootSlice = createSlice({
         (c) => c.id === action.payload.id
       );
       state.cliente.contasBancarias.splice(index, 1);
+      localStorage.setItem('currentClient', JSON.stringify(state.cliente));
+    },
+    addAdministrador: (state, action: ActionAdministrador) => {
+      state.cliente.administradores.push(action.payload);
+      localStorage.setItem('currentClient', JSON.stringify(state.cliente));
+    },
+    deleteAdministrador: (state, action: ActionAdministrador) => {
+      const index = state.cliente.administradores.findIndex(
+        (c) => c.id === action.payload.id
+      );
+      state.cliente.administradores.splice(index, 1);
       localStorage.setItem('currentClient', JSON.stringify(state.cliente));
     },
     addControladora: (state, action: ActionControlador) => {
@@ -197,7 +214,10 @@ const rootSlice = createSlice({
         'Cadastro de controladora';
       state.selectedControladora = action.payload;
     },
-    setSelectedPessoaProprietaria: (state, action: ActionPessoaProprietaria) => {
+    setSelectedPessoaProprietaria: (
+      state,
+      action: ActionPessoaProprietaria
+    ) => {
       state.showPanelControladoras = false;
       state.showPanelPessoaProprietaria = true;
       state.showMenuControladora = false;
@@ -247,5 +267,7 @@ export const {
   addFatca,
   updateFatca,
   deleteFatca,
+  addAdministrador,
+  deleteAdministrador,
 } = rootSlice.actions;
 export default rootSlice.reducer;

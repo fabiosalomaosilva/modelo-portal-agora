@@ -300,6 +300,7 @@ export default function FormPessoaProprietaria(
             <option value='CORECON'>CORECON</option>
             <option value='CRM'>CRM</option>
           </Select>
+          
           <DecimalInput
             placeholder='Participação'
             label='Participação'
