@@ -29,6 +29,7 @@ type CadastroPjPasso02Errors = {
   faturamento?: string;
   tipoEnderecoCorrespondencia?: string;
   especificacaoEnderecoCorrespondencia?: string;
+  contasBancarias?: string;
 };
 
 const onlyNumbers = (value: any) => {
@@ -88,6 +89,7 @@ export default function CadastroPjPasso02() {
   const onSubmit = (values: Cliente) => {
     if (cliente.contasBancarias.length === 0) {
       toast('Nenhuma conta bancária foi cadastrada', { type: 'error' });
+      return;
     }
     const aplicacaoFinanceira = parseFloat(
       onlyNumbers(values.aplicacaoFinanceira)
@@ -135,6 +137,13 @@ export default function CadastroPjPasso02() {
       errors.especificacaoEnderecoCorrespondencia =
         'Campo o Especificação de endereço de correspondência é obrigatória';
     }
+
+    // if (values.contasBancarias.length === 0) {
+    //   errors.contasBancarias =
+    //     'Nenhuma conta bancária foi cadastrada';
+
+    // }
+
     return errors;
   };
 
