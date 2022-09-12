@@ -42,8 +42,12 @@ export default function FormFatca(props: FormFatcaProps) {
   });
 
   const onSubmit = (values: Nif) => {
-    if (cliente != null && cliente.pessoasProprietarias?.find((i) => i.id === props.pessoaProprietariaId)?.nifs.filter((i) => i.id == selectedFatca.id).length == 0) {
-      formik.setFieldValue('id', uuidv4());
+    if (cliente != null && cliente.pessoasProprietarias != null) {
+      const nifs = cliente.pessoasProprietarias.find(
+        (i) => i.id == props.pessoaProprietariaId
+      )?.nifs as Nif[];
+      if (nifs.filter((i) => i.id == selectedFatca.id).length == 0)
+        formik.setFieldValue('id', uuidv4());
       dispatch(addFatca(formik.values));
     } else {
       dispatch(updateFatca(formik.values));
