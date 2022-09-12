@@ -67,7 +67,6 @@ export default function FormControladora(props: FormControladoraProps) {
       })
       .test('cnpj1', 'CNPJ já foi cadastrado', (val) => {
         if (val != undefined && cleanCnpjCpf(val).length === 14) {
-          console.log(selectedControlador.cnpj);
           if (selectedControlador.cnpj === cleanCnpjCpf(val)) {
             return true;
           }

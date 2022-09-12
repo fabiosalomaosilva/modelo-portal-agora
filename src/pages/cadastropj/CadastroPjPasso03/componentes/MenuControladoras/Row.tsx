@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../../store';
 import {
   deleteControladora,
+  deletePessoaProprietaria,
   setSelectedControlador,
+  setSelectedPessoaProprietaria,
 } from '../../../../../store/rootSlice';
 import { MutableRefObject, useRef, useState } from 'react';
 
@@ -11,6 +13,7 @@ type RowProps = {
   item: PessoaProprietaria;
   dados: PessoaProprietaria[];
   children?: JSX.Element;
+  className?: string;
 };
 
 export default function Row(props: RowProps) {
@@ -30,7 +33,7 @@ export default function Row(props: RowProps) {
   };
   return (
     <div>
-      <li>
+      <li className={props.className}>
         {props.item.rg === 0 && props.item.orgaoEmissor === 'false' ? (
           <div id='1' className='card-pre card-parent'>
             <div className='grid grid-cols-6 h-11'>
@@ -48,8 +51,18 @@ export default function Row(props: RowProps) {
               </div>
               <div className='text-right'>
                 <button
-                  className='p-1 rounded-full w-7 h-7 font-bold text-gray-600 bg-gray-200 hover:bg-gray-300 -pl-[3px] ml-1 mt-1'
-                  onClick={() => dispatch(setSelectedControlador(props.item))}
+                  className='p-1 rounded-full w-7 h-7 font-bold text-gray-600 bg-gray-200 hover:bg-gray-300 transition-all ease-in-out -pl-[3px] ml-1 mt-1'
+                  onClick={() =>
+                    dispatch(
+                      setSelectedControlador({
+                        id: props.item.id,
+                        razaoSocial: props.item.nome,
+                        cnpj: props.item.cpf,
+                        participacao: props.item.participacao,
+                        controladorPai: props.item.controladorPai
+                      } as Controlador)
+                    )
+                  }
                 >
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -67,8 +80,13 @@ export default function Row(props: RowProps) {
                   </svg>
                 </button>
                 <button
-                  className='p-1 rounded-full w-7 h-7 font-bold text-gray-600 bg-gray-200 hover:bg-gray-300 -pl-[3px] ml-1 mt-1'
-                  onClick={() => dispatch(deleteControladora(props.item))}
+                  className='p-1 rounded-full w-7 h-7 font-bold text-gray-600 bg-gray-200 hover:bg-gray-300 transition-all ease-in-out -pl-[3px] ml-1 mt-1'
+                  onClick={() => dispatch(deleteControladora({
+                    id: props.item.id,
+                    razaoSocial: props.item.nome,
+                    cnpj: props.item.cpf,
+                    participacao: props.item.participacao,
+                  } as Controlador))}
                 >
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -116,7 +134,7 @@ export default function Row(props: RowProps) {
                 />
 
                 <button
-                  className='p-1 rounded-full w-7 h-7 font-bold text-gray-600 bg-gray-200 hover:bg-gray-300 -pl-[3px] solid transition-transform duration rotate-0 peer-checked:rotate-180'
+                  className='p-1 rounded-full w-7 h-7 font-bold text-gray-600 bg-gray-200 hover:bg-gray-300 active:opacity-80 -pl-[3px] solid transition-transform duration-500 rotate-0 peer-checked:rotate-180'
                   onClick={() => expandPanel()}
                   type='button'
                 >
@@ -135,7 +153,12 @@ export default function Row(props: RowProps) {
                     />
                   </svg>
                 </button>
-                <button className='p-1 rounded-full w-7 h-7 font-bold text-gray-600 bg-gray-200 hover:bg-gray-300 -pl-[3px] ml-1'>
+                <button
+                  className='p-1 rounded-full w-7 h-7 font-bold text-gray-600 bg-gray-200 hover:bg-gray-300 transition-all ease-in-out active:opacity-80 -pl-[3px] ml-1'
+                  onClick={() =>
+                    dispatch(setSelectedPessoaProprietaria(props.item))
+                  }
+                >
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     fill='none'
@@ -151,7 +174,11 @@ export default function Row(props: RowProps) {
                     />
                   </svg>
                 </button>
-                <button className='p-1 rounded-full w-7 h-7 font-bold text-gray-600 bg-gray-200 hover:bg-gray-300 -pl-[3px] ml-1'>
+                <button 
+                className='p-1 rounded-full w-7 h-7 font-bold text-gray-600 bg-gray-200 hover:bg-gray-300 transition-all ease-in-out active:opacity-80 -pl-[3px] ml-1'
+                onClick={() =>
+                  dispatch(deletePessoaProprietaria(props.item))
+                }>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     fill='none'
@@ -176,9 +203,7 @@ export default function Row(props: RowProps) {
                 <div className='card-title-sm'>
                   Tem vínculo com a Ágora CTVM SA:
                 </div>
-                <div>
-                  {props.item.tipoVinculo === 'true' ? 'Sim' : 'Não'}
-                </div>
+                <div>{props.item.tipoVinculo === 'true' ? 'Sim' : 'Não'}</div>
               </div>
               <div className='card-title py-2'>
                 <div className='card-title-sm'>Vínculo:</div>
@@ -197,9 +222,7 @@ export default function Row(props: RowProps) {
                 </div>
               </div>
               <div className='card-title py-2'>
-                <div className='card-title-sm'>
-                  Possui outra nacionalidade:
-                </div>
+                <div className='card-title-sm'>Possui outra nacionalidade:</div>
                 <div>
                   {props.item.possuiOutraNacionalidade === true ? 'Sim' : 'Não'}
                 </div>
@@ -233,7 +256,7 @@ export default function Row(props: RowProps) {
           {props.dados
             .filter((i) => i.controladorPai === props.item.cpf)
             ?.map((i) => (
-              <Row key={i.id} dados={props.dados} item={i} />
+              <Row key={i.id} dados={props.dados} item={i} className='-mt-3' />
             ))}
         </ul>
       )}

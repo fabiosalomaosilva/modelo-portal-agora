@@ -189,6 +189,14 @@ const rootSlice = createSlice({
         'Cadastro de controladora';
       state.selectedControladora = action.payload;
     },
+    setSelectedPessoaProprietaria: (state, action: ActionPessoaProprietaria) => {
+      state.showPanelControladoras = false;
+      state.showPanelPessoaProprietaria = true;
+      state.showMenuControladora = false;
+      state.textoMenuControladoraPessoaProprietaria =
+        'Cadastro de Pessoa Proprietaria';
+      state.selectedPessoaProprietaria = action.payload;
+    },
     updateSelectedControlador: (state, action: ActionUpdateControlador) => {
       switch (action.payload.field) {
         case 'razaoSocial':
@@ -223,6 +231,7 @@ export const {
   updatePessoaProprietaria,
   deletePessoaProprietaria,
   setSelectedControlador,
+  setSelectedPessoaProprietaria,
   updateSelectedControlador,
   cleanCliente,
   setShowFormFatca,

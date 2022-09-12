@@ -66,6 +66,9 @@ export default function FormPessoaProprietaria(
       })
       .test('cpf1', 'CPF já foi cadastrado', (val) => {
         if (val != undefined && cleanCnpjCpf(val).length === 11) {
+          if (selectedPessoaProprietaria.cpf === cleanCnpjCpf(val)) {
+            return true;
+          }
           const res = cliente.pessoasProprietarias.find(
             (i) => i.cpf == cleanCnpjCpf(val)
           );
@@ -106,30 +109,24 @@ export default function FormPessoaProprietaria(
             (i) =>
               i.controladorPai == cleanCnpjCpf(formik.values.controladorPai)
           );
-          console.log(controladores);
           const proprietarios = cliente.pessoasProprietarias.filter(
             (i) =>
               i.controladorPai == cleanCnpjCpf(formik.values.controladorPai)
           );
-          console.log(proprietarios);
           let somaControladores = controladores.reduce(
             (acumulado, item) => acumulado + item.participacao,
             0
           );
-          console.log('somaControladores: ', somaControladores);
           let somaProprietarios = proprietarios.reduce(
             (acumulado, item) => acumulado + convertToFloat(item.participacao),
             0
           );
-          console.log('somaProprietarios: ', somaProprietarios);
 
           let participacaoAtual = undefined;
           if (selectedPessoaProprietaria.id != '') {
             participacaoAtual = cliente.pessoasProprietarias?.find(
               (i) => i.id === selectedPessoaProprietaria.id
             )?.participacao;
-
-            console.log('participacaoAtual: ', selectedPessoaProprietaria.id);
           }
 
           if (
@@ -140,10 +137,8 @@ export default function FormPessoaProprietaria(
               somaProprietarios - convertToFloat(participacaoAtual);
           }
 
-          console.log('somaProprietarios: ', somaProprietarios);
           const soma =
             somaControladores + somaProprietarios + convertToFloat(val);
-          console.log('Soma final: ', soma);
           if (soma > 100) {
             return false;
           }
@@ -226,7 +221,6 @@ export default function FormPessoaProprietaria(
 
   return (
     <div className={`${textClass}`}>
-      <span>{formik.isValid.toString()}</span>
       <form onSubmit={formik.handleSubmit}>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-1 md:gap-4 sm:gap-2'>
           <div className='sm:col-span-2 md:col-span-3 xl:col-span-5'>
