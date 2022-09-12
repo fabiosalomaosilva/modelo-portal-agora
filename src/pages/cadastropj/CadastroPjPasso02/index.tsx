@@ -21,6 +21,7 @@ import { Cliente } from '../../../models/cliente';
 import MaskInput from '../../../components/forms/Input/inputTextMask';
 import DecimalInput from '../../../components/forms/Input/inputDecimal';
 import swal from 'sweetalert';
+import { convertToFloat } from '../../../utils/converters/converters';
 
 type CadastroPjPasso02Errors = {
   aplicacaoFinanceira?: string;
@@ -91,22 +92,18 @@ export default function CadastroPjPasso02() {
       toast('Nenhuma conta bancária foi cadastrada', { type: 'error' });
       return;
     }
-    const aplicacaoFinanceira = parseFloat(
-      onlyNumbers(values.aplicacaoFinanceira)
-    );
-    const emprestimosFinanciamentos = parseFloat(
-      onlyNumbers(values.emprestimosFinanciamentos)
-    );
-    const patrimonioLiquido = parseFloat(onlyNumbers(values.patrimonioLiquido));
-    const faturamento = parseFloat(onlyNumbers(values.faturamento));
-    formik.setFieldValue('contasBancarias', cliente.contasBancarias);
-    formik.setFieldValue(
-      'emprestimosFinanciamentos',
-      emprestimosFinanciamentos
-    );
-    formik.setFieldValue('patrimonioLiquido', patrimonioLiquido);
-    formik.setFieldValue('faturamento', faturamento);
-    dispatch(setCliente(values));
+    let clienteUpdate: Cliente = {
+      ...cliente,
+      aplicacaoFinanceira: convertToFloat(values.aplicacaoFinanceira),
+      emprestimosFinanciamentos: convertToFloat(values.emprestimosFinanciamentos),
+      patrimonioLiquido: convertToFloat(values.patrimonioLiquido),
+      faturamento: convertToFloat(values.faturamento),
+      tipoEnderecoCorrespondencia: formik.values.tipoEnderecoCorrespondencia,
+      especificacaoEnderecoCorrespondencia:
+        formik.values.especificacaoEnderecoCorrespondencia,
+    };
+
+    dispatch(setCliente(clienteUpdate));
     navigate('/pj/passo03');
   };
 

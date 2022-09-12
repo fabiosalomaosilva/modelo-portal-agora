@@ -108,7 +108,15 @@ const rootSlice = createSlice({
       localStorage.clear();
     },
     addContaBancaria: (state, action: ActionContaBancaria) => {
-      state.cliente.contasBancarias.push(action.payload);
+      const conta: ContaBancaria = {
+        id: action.payload.id,
+        agencia: action.payload.agencia,
+        banco: action.payload.banco,
+        conta: action.payload.conta,
+        tipo: action.payload.tipo,
+        digito: action.payload.digito        
+      }
+      state.cliente.contasBancarias.push(conta);
       localStorage.setItem('currentClient', JSON.stringify(state.cliente));
     },
     deleteContaBancaria: (state, action: ActionContaBancaria) => {
