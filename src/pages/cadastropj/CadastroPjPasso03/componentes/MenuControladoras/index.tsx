@@ -1,4 +1,3 @@
-import React, { createRef, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../../../../components/forms/Button';
 import { PessoaProprietaria } from '../../../../../models/conta';
@@ -18,7 +17,8 @@ export default function MenuControladoras(props: MenuControladorasProps) {
   const cliente = useSelector((state: RootState) => state.cliente);
   const dispatch = useDispatch();
 
-  let dados: PessoaProprietaria[] = cliente.pessoasProprietarias.length > 0 ? cliente.pessoasProprietarias : [];
+  let dados: PessoaProprietaria[] =
+    cliente.pessoasProprietarias.length > 0 ? cliente.pessoasProprietarias : [];
   cliente.controladores.map((item) => {
     const pessoa: PessoaProprietaria = {
       id: item.id,
@@ -34,7 +34,7 @@ export default function MenuControladoras(props: MenuControladorasProps) {
       possuiVistoPermanenteOutroPais: false,
       temResidenciafiscalOutroPais: false,
       vinculoComAgora: false,
-      nifs: []
+      nifs: [],
     };
     dados = [...dados, pessoa];
   });

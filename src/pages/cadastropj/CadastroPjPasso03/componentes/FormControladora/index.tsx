@@ -1,9 +1,8 @@
 import { useFormik } from 'formik';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../../../../components/forms/Button';
 import Select from '../../../../../components/forms/Select';
-import { Cliente } from '../../../../../models/cliente';
 import { Controlador } from '../../../../../models/conta';
 import { RootState } from '../../../../../store';
 import Input from '../../../../../components/forms/Input/input';
@@ -11,12 +10,10 @@ import {
   addControladora,
   setHidePanelControladoras,
   updateControladora,
-  updateSelectedControlador,
 } from '../../../../../store/rootSlice';
 import MaskInput from '../../../../../components/forms/Input/inputTextMask';
 import DecimalInput from '../../../../../components/forms/Input/inputDecimal';
 import { cnpjValidation } from '../../../../../utils/validations/validationCnpj';
-import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import {
   cleanCnpjCpf,
@@ -27,12 +24,6 @@ export interface FormControladoraProps {
   visible: boolean;
   controladorPai?: string;
 }
-
-type Controladora = {
-  razaoSocial?: string;
-  cnpj?: string;
-  participacao?: string;
-};
 
 export interface FormControladoraErrors {
   razaoSocial?: string;

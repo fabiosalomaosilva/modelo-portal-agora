@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import NumberFormat from 'react-number-format';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -7,13 +6,12 @@ import { toast } from 'react-toastify';
 import Button from '../../../components/forms/Button';
 import Input from '../../../components/forms/Input/input';
 import Select from '../../../components/forms/Select';
-import Separator from '../../../components/forms/Separator';
 import TitleSeparator from '../../../components/forms/TitleSeparator';
 import { RootState } from '../../../store';
 import { Cliente } from '../../../models/cliente';
 import { setCliente } from '../../../store/rootSlice';
 import MaskInput from '../../../components/forms/Input/inputTextMask';
-import { CepEndereco, getCep } from '../../../services/cep';
+import { getCep } from '../../../services/cep';
 import { useNavigate } from 'react-router-dom';
 import { cnpjValidation } from '../../../utils/validations/validationCnpj';
 
