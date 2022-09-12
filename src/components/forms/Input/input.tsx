@@ -19,17 +19,25 @@ export interface InputProps {
   max?: number | undefined;
   min?: number | undefined;
   type: 'text' | 'number' | 'tel' | 'email';
+  colSpan?: number;
 }
 
 export default function Input(props: InputProps) {
   let border = 'border-gray-300';
+  let cols = '';
+  
+  if(props.colSpan){
+    cols = ` col-span-1 md:col-span-${props.colSpan}`;
+  }
 
   if (props.error != undefined) {
     border = 'border-red-300 placeholder:text-red-400 bg-red-50';
   }
 
+
+
   return (
-    <div className='my-2 md:my-8'>
+    <div className={`my-2 ${cols}`}>
       <div className='h-7'>
         <label
           htmlFor={props.id}

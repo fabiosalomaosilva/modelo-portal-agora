@@ -151,9 +151,10 @@ export default function CadastroPjPasso01() {
       <form onSubmit={formik.handleSubmit}>
         <section id='info-inicial-passo01' className='my-6'>
           <TitleSeparator label='Informações Iniciais:' />
-          <div className='text-left'>
+          <div className='grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-4 m-0 md:mt-6'>
             <Input
               type='text'
+              colSpan={4}
               placeholder='Nome de usuário'
               label='Nome de usuário:'
               description='Máximo de 10 caractéres:*'
@@ -193,312 +194,275 @@ export default function CadastroPjPasso01() {
               </option>
             </Select>
 
-            <div className='grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-4 m-0 md:-mt-6'>
-              <div>
-                <MaskInput
-                  type='tel'
-                  mask='(99) 99999-9999'
-                  placeholder='Telefone'
-                  description='Comercial*'
-                  label='Telefone'
-                  id='telefone'
-                  name='telefone'
-                  value={formik.values.telefone}
-                  error={formik.errors.telefone}
-                  touched={formik.touched.telefone}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-              </div>
-              <div>
-                <Input
-                  type='tel'
-                  placeholder='Ramal'
-                  label='Ramal'
-                  id='ramal'
-                  name='ramal'
-                  value={formik.values.ramal}
-                  error={formik.errors.ramal}
-                  touched={formik.touched.ramal}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-              </div>
-              <div>
-                <Input
-                  type='email'
-                  className='textfield'
-                  placeholder='E-mail'
-                  label='E-mail'
-                  id='email'
-                  name='email'
-                  value={formik.values.email}
-                  error={formik.errors.email}
-                  touched={formik.touched.email}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-              </div>
-              <div>
-                <Input
-                  type='email'
-                  placeholder='E-mail'
-                  label='Confirmar e-mail'
-                  id='confirmarEmail'
-                  name='confirmarEmail'
-                  value={formik.values.confirmarEmail}
-                  error={formik.errors.confirmarEmail}
-                  touched={formik.touched.confirmarEmail}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-              </div>
-            </div>
+            <MaskInput
+              type='tel'
+              mask='(99) 99999-9999'
+              placeholder='Telefone'
+              description='Comercial*'
+              label='Telefone'
+              id='telefone'
+              name='telefone'
+              value={formik.values.telefone}
+              error={formik.errors.telefone}
+              touched={formik.touched.telefone}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            <Input
+              type='tel'
+              placeholder='Ramal'
+              label='Ramal'
+              id='ramal'
+              name='ramal'
+              value={formik.values.ramal}
+              error={formik.errors.ramal}
+              touched={formik.touched.ramal}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            <Input
+              type='email'
+              className='textfield'
+              placeholder='E-mail'
+              label='E-mail'
+              id='email'
+              name='email'
+              value={formik.values.email}
+              error={formik.errors.email}
+              touched={formik.touched.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            <Input
+              type='email'
+              placeholder='E-mail'
+              label='Confirmar e-mail'
+              id='confirmarEmail'
+              name='confirmarEmail'
+              value={formik.values.confirmarEmail}
+              error={formik.errors.confirmarEmail}
+              touched={formik.touched.confirmarEmail}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
           </div>
         </section>
 
         <section id='info-societaria-passo01' className='my-6'>
           <TitleSeparator label='Informações empresariais:' />
           <div className='text-left md:mt-4'>
-            <div className='grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-4 m-0 md:-mt-6'>
-              <div>
-                <MaskInput
-                  type='tel'
-                  mask='99.999.999/9999-99'
-                  placeholder='CNPJ'
-                  label='CNPJ'
-                  id='cnpj'
-                  name='cnpj'
-                  value={formik.values.cnpj}
-                  error={formik.errors.cnpj}
-                  touched={formik.touched.cnpj}
-                  onChange={formik.handleChange}
-                  onBlur={validarCpf}
-                />
-              </div>
-              <div className='col-span-3'>
-                <Input
-                  type='text'
-                  placeholder='Denominação Social'
-                  label='Denominação Social'
-                  id='denominacaoComercial'
-                  name='denominacaoComercial'
-                  value={formik.values.denominacaoComercial}
-                  error={formik.errors.denominacaoComercial}
-                  touched={formik.touched.denominacaoComercial}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-              </div>
-            </div>
+            <div className='grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-4 m-0 md:mt-6'>
+              <MaskInput
+                type='tel'
+                mask='99.999.999/9999-99'
+                placeholder='CNPJ'
+                label='CNPJ'
+                id='cnpj'
+                name='cnpj'
+                value={formik.values.cnpj}
+                error={formik.errors.cnpj}
+                touched={formik.touched.cnpj}
+                onChange={formik.handleChange}
+                onBlur={validarCpf}
+              />
+              <Input
+                type='text'
+                colSpan={3}
+                placeholder='Denominação Social'
+                label='Denominação Social'
+                id='denominacaoComercial'
+                name='denominacaoComercial'
+                value={formik.values.denominacaoComercial}
+                error={formik.errors.denominacaoComercial}
+                touched={formik.touched.denominacaoComercial}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              <MaskInput
+                type='text'
+                mask='99/99/9999'
+                placeholder='01/01/2022'
+                label='Data de constituição'
+                id='dataConstituicao'
+                name='dataConstituicao'
+                value={formik.values.dataConstituicao}
+                error={formik.errors.dataConstituicao}
+                touched={formik.touched.dataConstituicao}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
 
-            <div className='grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-4 m-0 md:-mt-6'>
-              <div>
-                <MaskInput
-                  type='text'
-                  mask='99/99/9999'
-                  placeholder='01/01/2022'
-                  label='Data de constituição'
-                  id='dataConstituicao'
-                  name='dataConstituicao'
-                  value={formik.values.dataConstituicao}
-                  error={formik.errors.dataConstituicao}
-                  touched={formik.touched.dataConstituicao}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-              </div>
-              <div className='col-span-3'>
-                <Input
-                  type='text'
-                  placeholder='Forma de constituição'
-                  label='Forma de constituição'
-                  id='formaConstituicao'
-                  name='formaConstituicao'
-                  value={formik.values.formaConstituicao}
-                  error={formik.errors.formaConstituicao}
-                  touched={formik.touched.formaConstituicao}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-              </div>
-            </div>
+              <Input
+                type='text'
+                colSpan={3}
+                placeholder='Forma de constituição'
+                label='Forma de constituição'
+                id='formaConstituicao'
+                name='formaConstituicao'
+                value={formik.values.formaConstituicao}
+                error={formik.errors.formaConstituicao}
+                touched={formik.touched.formaConstituicao}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
 
-            <div className='grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-4 m-0 md:-mt-6'>
-              <div>
-                <Input
-                  type='text'
-                  placeholder='NIRE'
-                  label='NIRE'
-                  id='nire'
-                  name='nire'
-                  value={formik.values.nire}
-                  error={formik.errors.nire}
-                  touched={formik.touched.nire}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-              </div>
-              <div>
-                <Select
-                  label='Principal objetivo social:'
-                  id='principalObjetoSocial'
-                  name='principalObjetoSocial'
-                  value={formik.values.principalObjetoSocial}
-                  error={formik.errors.principalObjetoSocial}
-                  touched={formik.touched.principalObjetoSocial}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                >
-                  <option value='Objetivo 01'>Objetivo 01</option>
-                  <option value='Objetivo 02'>Objetivo 01</option>
-                  <option value='Objetivo 03'>Objetivo 01</option>
-                  <option value='Objetivo 04'>Objetivo 01</option>
-                </Select>
-              </div>
-              <div>
-                <Select
-                  label='Principal Atividade:'
-                  id='principalAtividade'
-                  name='principalAtividade'
-                  value={formik.values.principalAtividade}
-                  error={formik.errors.principalAtividade}
-                  touched={formik.touched.principalAtividade}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                >
-                  <option value='1'>Banco múltiplo</option>
-                  <option value='2'>Banco de investimentos</option>
-                  <option value='3'>Bolsa de valores e mercadorias</option>
-                  <option value='4'>Clube de investimentos</option>
-                </Select>
-              </div>
-              <div>
-                <Select
-                  label='Possui algum vínculo com a Ágora:'
-                  id='possuiVinculocomAgora'
-                  name='possuiVinculocomAgora'
-                  value={formik.values.possuiVinculocomAgora}
-                  error={formik.errors.possuiVinculocomAgora}
-                  touched={formik.touched.possuiVinculocomAgora}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                >
-                  <option value='1'>Banco múltiplo</option>
-                  <option value='2'>Banco de investimentos</option>
-                  <option value='3'>Bolsa de valores e mercadorias</option>
-                  <option value='4'>Clube de investimentos</option>
-                </Select>
-              </div>
-            </div>
+              <Input
+                type='text'
+                placeholder='NIRE'
+                label='NIRE'
+                id='nire'
+                name='nire'
+                value={formik.values.nire}
+                error={formik.errors.nire}
+                touched={formik.touched.nire}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
 
-            <div className='grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-4 m-0 md:-mt-6'>
-              <div>
-                <MaskInput
-                  type='tel'
-                  mask='99.999-999'
-                  placeholder='CEP'
-                  label='CEP'
-                  id='cep'
-                  name='cep'
-                  value={formik.values.cep}
-                  error={formik.errors.cep}
-                  touched={formik.touched.cep}
-                  onChange={formik.handleChange}
-                  onBlur={(e) => resolveCep(e)}
-                />
-              </div>
-              <div>
-                <Input
-                  type='text'
-                  placeholder='Número'
-                  label='Número'
-                  id='numero'
-                  name='numero'
-                  value={formik.values.numero}
-                  error={formik.errors.numero}
-                  touched={formik.touched.numero}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-              </div>
-              <div className='md:col-span-2'>
-                <Input
-                  type='text'
-                  placeholder='Endereço'
-                  label='Endereço'
-                  disabled
-                  id='endereco'
-                  name='endereco'
-                  value={formik.values.endereco}
-                  error={formik.errors.endereco}
-                  touched={formik.touched.endereco}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-              </div>
-            </div>
+              <Select
+                label='Principal objetivo social:'
+                id='principalObjetoSocial'
+                name='principalObjetoSocial'
+                value={formik.values.principalObjetoSocial}
+                error={formik.errors.principalObjetoSocial}
+                touched={formik.touched.principalObjetoSocial}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              >
+                <option value='Objetivo 01'>Objetivo 01</option>
+                <option value='Objetivo 02'>Objetivo 01</option>
+                <option value='Objetivo 03'>Objetivo 01</option>
+                <option value='Objetivo 04'>Objetivo 01</option>
+              </Select>
 
-            <div className='grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-4 m-0 md:-mt-6'>
-              <div>
-                <Input
-                  type='text'
-                  placeholder='Complemento'
-                  label='Complemento'
-                  id='complemento'
-                  name='complemento'
-                  value={formik.values.complemento}
-                  error={formik.errors.complemento}
-                  touched={formik.touched.complemento}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-              </div>
-              <div>
-                <Input
-                  type='text'
-                  placeholder='Bairro'
-                  label='Bairro'
-                  disabled
-                  id='bairro'
-                  name='bairro'
-                  value={formik.values.bairro}
-                  error={formik.errors.bairro}
-                  touched={formik.touched.bairro}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-              </div>
-              <div>
-                <Input
-                  type='text'
-                  placeholder='Estado'
-                  label='Estado'
-                  disabled
-                  id='estado'
-                  name='estado'
-                  value={formik.values.estado}
-                  error={formik.errors.estado}
-                  touched={formik.touched.estado}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-              </div>
-              <div>
-                <Input
-                  type='text'
-                  placeholder='Cidade'
-                  label='Cidade'
-                  disabled
-                  id='cidade'
-                  name='cidade'
-                  value={formik.values.cidade}
-                  error={formik.errors.cidade}
-                  touched={formik.touched.cidade}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-              </div>
+              <Select
+                label='Principal Atividade:'
+                id='principalAtividade'
+                name='principalAtividade'
+                value={formik.values.principalAtividade}
+                error={formik.errors.principalAtividade}
+                touched={formik.touched.principalAtividade}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              >
+                <option value='1'>Banco múltiplo</option>
+                <option value='2'>Banco de investimentos</option>
+                <option value='3'>Bolsa de valores e mercadorias</option>
+                <option value='4'>Clube de investimentos</option>
+              </Select>
+
+              <Select
+                label='Possui algum vínculo com a Ágora:'
+                id='possuiVinculocomAgora'
+                name='possuiVinculocomAgora'
+                value={formik.values.possuiVinculocomAgora}
+                error={formik.errors.possuiVinculocomAgora}
+                touched={formik.touched.possuiVinculocomAgora}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              >
+                <option value='1'>Banco múltiplo</option>
+                <option value='2'>Banco de investimentos</option>
+                <option value='3'>Bolsa de valores e mercadorias</option>
+                <option value='4'>Clube de investimentos</option>
+              </Select>
+
+              <MaskInput
+                type='tel'
+                mask='99.999-999'
+                placeholder='CEP'
+                label='CEP'
+                id='cep'
+                name='cep'
+                value={formik.values.cep}
+                error={formik.errors.cep}
+                touched={formik.touched.cep}
+                onChange={formik.handleChange}
+                onBlur={(e) => resolveCep(e)}
+              />
+
+              <Input
+                type='text'
+                placeholder='Número'
+                label='Número'
+                id='numero'
+                name='numero'
+                value={formik.values.numero}
+                error={formik.errors.numero}
+                touched={formik.touched.numero}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+
+              <Input
+                type='text'
+                colSpan={2}
+                placeholder='Endereço'
+                label='Endereço'
+                disabled
+                id='endereco'
+                name='endereco'
+                value={formik.values.endereco}
+                error={formik.errors.endereco}
+                touched={formik.touched.endereco}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+
+              <Input
+                type='text'
+                placeholder='Complemento'
+                label='Complemento'
+                id='complemento'
+                name='complemento'
+                value={formik.values.complemento}
+                error={formik.errors.complemento}
+                touched={formik.touched.complemento}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+
+              <Input
+                type='text'
+                placeholder='Bairro'
+                label='Bairro'
+                disabled
+                id='bairro'
+                name='bairro'
+                value={formik.values.bairro}
+                error={formik.errors.bairro}
+                touched={formik.touched.bairro}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+
+              <Input
+                type='text'
+                placeholder='Estado'
+                label='Estado'
+                disabled
+                id='estado'
+                name='estado'
+                value={formik.values.estado}
+                error={formik.errors.estado}
+                touched={formik.touched.estado}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+
+              <Input
+                type='text'
+                placeholder='Cidade'
+                label='Cidade'
+                disabled
+                id='cidade'
+                name='cidade'
+                value={formik.values.cidade}
+                error={formik.errors.cidade}
+                touched={formik.touched.cidade}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
             </div>
 
             <div className='flex flex-row justify-between'>

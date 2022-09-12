@@ -106,26 +106,44 @@ export default function FormPessoaProprietaria(
             (i) =>
               i.controladorPai == cleanCnpjCpf(formik.values.controladorPai)
           );
+          console.log(controladores);
           const proprietarios = cliente.pessoasProprietarias.filter(
             (i) =>
               i.controladorPai == cleanCnpjCpf(formik.values.controladorPai)
           );
+          console.log(proprietarios);
           let somaControladores = controladores.reduce(
             (acumulado, item) => acumulado + item.participacao,
             0
           );
+          console.log('somaControladores: ', somaControladores);
           let somaProprietarios = proprietarios.reduce(
             (acumulado, item) => acumulado + convertToFloat(item.participacao),
             0
           );
-          const participacaoAtual = cliente.pessoasProprietarias?.find(
-            (i) => i.id === selectedPessoaProprietaria.id
-          )?.participacao;
-          if (participacaoAtual != undefined && convertToFloat(participacaoAtual) > 0) {
-            somaProprietarios =somaProprietarios - convertToFloat(participacaoAtual);
+          console.log('somaProprietarios: ', somaProprietarios);
+
+          let participacaoAtual = undefined;
+          if (selectedPessoaProprietaria.id != '') {
+            participacaoAtual = cliente.pessoasProprietarias?.find(
+              (i) => i.id === selectedPessoaProprietaria.id
+            )?.participacao;
+
+            console.log('participacaoAtual: ', selectedPessoaProprietaria.id);
           }
 
-          const soma = somaControladores + somaProprietarios + convertToFloat(val);
+          if (
+            participacaoAtual != undefined &&
+            convertToFloat(participacaoAtual) > 0
+          ) {
+            somaProprietarios =
+              somaProprietarios - convertToFloat(participacaoAtual);
+          }
+
+          console.log('somaProprietarios: ', somaProprietarios);
+          const soma =
+            somaControladores + somaProprietarios + convertToFloat(val);
+          console.log('Soma final: ', soma);
           if (soma > 100) {
             return false;
           }
@@ -133,10 +151,12 @@ export default function FormPessoaProprietaria(
         }
         return false;
       }),
-    tipoVinculo: Yup.string().required('O campo Tipo de vínculo é obrigatório'),
-    vinculoComAgora: Yup.string().when('tipoVinculo', {
+    vinculoComAgora: Yup.boolean().required(
+      'O campo Tem Vínculo com a Ágora é obrigatório'
+    ),
+    tipoVinculo: Yup.string().when('vinculoComAgora', {
       is: true,
-      then: Yup.string().required('O campo Vínculo com a Ágora é obrigatório'),
+      then: Yup.string().required('O campo Tipo de Vínculo é obrigatório'),
     }),
     pessoaExpostaPoliticamente: Yup.boolean().required(
       'O campo Pessoa exposta politicamente é obrigatório'
@@ -166,17 +186,20 @@ export default function FormPessoaProprietaria(
       temResidenciafiscalOutroPais: formik.values.temResidenciafiscalOutroPais,
       vinculoComAgora: formik.values.vinculoComAgora,
       rg: formik.values.rg,
-      tipoVinculo: formik.values.tipoVinculo === '0' ? '' : formik.values.tipoVinculo,
-      nifs: formik.values.nifs
-    }
+      tipoVinculo:
+        formik.values.tipoVinculo === '0' ? '' : formik.values.tipoVinculo,
+      nifs: formik.values.nifs,
+    };
 
-    const isUpdate = cliente.pessoasProprietarias.filter((i) => i.id === pessoa.id).length === 0;
+    const isUpdate =
+      cliente.pessoasProprietarias.filter((i) => i.id === pessoa.id).length ===
+      0;
     if (isUpdate) {
       dispatch(addPessoaProprietaria(pessoa));
     } else {
       dispatch(updatePessoaProprietaria(pessoa));
     }
-    
+
     formik.resetForm();
     dispatch(setHidePanelPessoaProprietaria());
   };

@@ -4,7 +4,7 @@ export interface ContaBancaria {
     conta: number;
     digito: number;
     banco: number;
-    id: number;
+    id: string;
 }
 
 export interface Controlador {

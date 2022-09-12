@@ -21,17 +21,23 @@ export interface InputProps {
   min?: number;
   type: 'text' | 'tel';
   ref?: React.MutableRefObject<null>;
+  colSpan?: number;
 }
 
 export default function MaskInput(props: InputProps) {
   let border = 'border-gray-300';
+  let cols = '';
+  
+  if(props.colSpan){
+    cols = ` col-span-1 md:col-span-${props.colSpan}`;
+  }
 
   if (props.error != undefined) {
     border = 'border-red-300 placeholder:text-red-400 bg-red-50';
   }
 
   return (
-    <div className='my-2 md:my-8'>
+    <div className={`my-2 ${cols}`}>
       <div className='h-7'>
         <label
           htmlFor='txtNomeUsuario'

@@ -15,11 +15,17 @@ export interface SelectProps {
   error?: string | undefined;
   touched?: boolean | undefined;
   visible?: boolean | string;
+  colSpan?: number;
 }
 
 export default function Select(props: SelectProps) {
   let border = 'border-gray-300';
   let visibility = '';
+  let cols = '';
+  
+  if(props.colSpan){
+    cols = ` col-span-1 md:col-span-${props.colSpan}`;
+  }
 
   if (props.error != undefined) {
     border = 'border-red-300 text-red-400 bg-red-50';
@@ -49,7 +55,7 @@ export default function Select(props: SelectProps) {
   }, [props.visible]);
 
   return (
-    <div className={`my-2 md:my-8 ${visibility}`}>
+    <div className={`my-2 ${cols} ${visibility}`}>
       <div className='h-7'>
         <label
           htmlFor='txtNomeUsuario'

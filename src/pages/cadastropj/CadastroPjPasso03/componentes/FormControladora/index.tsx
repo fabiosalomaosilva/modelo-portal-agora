@@ -6,7 +6,6 @@ import Select from '../../../../../components/forms/Select';
 import { Cliente } from '../../../../../models/cliente';
 import { Controlador } from '../../../../../models/conta';
 import { RootState } from '../../../../../store';
-import { v4 as uuidv4 } from 'uuid';
 import Input from '../../../../../components/forms/Input/input';
 import {
   addControladora,
@@ -246,7 +245,7 @@ export default function FormControladora(props: FormControladoraProps) {
             />
           </div>
         </div>
-        <div className='text-right -mt-5'>
+        <div className='text-right mt-5'>
           <Button
             type='button'
             size='sm'
@@ -257,7 +256,7 @@ export default function FormControladora(props: FormControladoraProps) {
             Cancelar
           </Button>
           <Button type='submit' size='sm' color='secondary'>
-            Adicionar Controladora
+            Salvar
           </Button>
         </div>
       </form>
