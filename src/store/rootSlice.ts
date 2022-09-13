@@ -61,6 +61,8 @@ const rootSlice = createSlice({
     selectedFatca: initialFatca,
     showPanelControladoras: false,
     showPanelPessoaProprietaria: false,
+    showPanelAdministrador: false,
+    showMenuAdministrador: true,
     showMenuControladora: true,
     showFormFatca: false,
     textoMenuControladoraPessoaProprietaria:
@@ -74,6 +76,14 @@ const rootSlice = createSlice({
     setHideFormFatca: (state) => {
       state.showFormFatca = false;
       state.selectedFatca = initialFatca;
+    },
+    setShowFormAdministrador: (state) => {
+      state.showPanelAdministrador = true;
+      state.showMenuAdministrador = false;
+    },
+    setHideFormAdministrador: (state) => {
+      state.showPanelAdministrador = false;
+      state.showMenuAdministrador = true;
     },
     setShowPanelControladoras: (state) => {
       state.showPanelControladoras = true;
@@ -114,14 +124,6 @@ const rootSlice = createSlice({
       localStorage.clear();
     },
     addContaBancaria: (state, action: ActionContaBancaria) => {
-      // const conta: ContaBancaria = {
-      //   id: action.payload.id,
-      //   agencia: action.payload.agencia,
-      //   banco: action.payload.banco,
-      //   conta: action.payload.conta,
-      //   tipo: action.payload.tipo,
-      //   digito: action.payload.digito
-      // }
       state.cliente.contasBancarias.push(action.payload);
       localStorage.setItem('currentClient', JSON.stringify(state.cliente));
     },
@@ -269,5 +271,7 @@ export const {
   deleteFatca,
   addAdministrador,
   deleteAdministrador,
+  setShowFormAdministrador,
+  setHideFormAdministrador
 } = rootSlice.actions;
 export default rootSlice.reducer;

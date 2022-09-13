@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { Administrador } from '../../../../../models/conta';
-import { addAdministrador } from '../../../../../store/rootSlice';
+import { addAdministrador, setHideFormAdministrador } from '../../../../../store/rootSlice';
 import Input from '../../../../../components/forms/Input/input';
 import MaskInput from '../../../../../components/forms/Input/inputTextMask';
 import Select from '../../../../../components/forms/Select';
@@ -41,11 +41,12 @@ export default function FormAdministrador(props: FormAdministradorProps) {
   const onSubmit = (values: Administrador) => {
       dispatch(addAdministrador(values));
       formik.resetForm();
-  };
+      dispatch(setHideFormAdministrador());
+};
 
   const handleCancel = () => {
     formik.resetForm();
-    //dispatch(setHidePanelPessoaProprietaria());
+    dispatch(setHideFormAdministrador());
   };
 
   const formik = useFormik({
@@ -116,8 +117,7 @@ export default function FormAdministrador(props: FormAdministradorProps) {
             <option value='CRM'>CRM</option>
           </Select>
         </div>
-        <Separator />
-        <div className='text-right mt-5'>
+        <div className='text-right mt-3'>
           <Button
             type='button'
             size='sm'
